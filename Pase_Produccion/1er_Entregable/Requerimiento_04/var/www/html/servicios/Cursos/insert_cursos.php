@@ -84,17 +84,17 @@ if (empty($_POST['TXT_NOMBRE'])) {
 				$nombreArchivo = round(microtime(true) * 1000) . '-' . $archivo['name'];
 
 				//bartoloricsi@gmail.com
+				/*
 				$ruta_destino_archivo = $_SERVER['DOCUMENT_ROOT'] . "/Archivos/IMAGEN/{$nombreArchivo}";
 				move_uploaded_file($archivo['tmp_name'], $ruta_destino_archivo);
+				*/
 				
-				/*
 				require_once $_SERVER['DOCUMENT_ROOT'] . '/app/config.php';
 				$connection = ssh2_connect(SFTP_HOST, SFTP_PORT);
 				if (ssh2_auth_password($connection, SFTP_USER, SFTP_PASS)) {
 					$rutaUpdoad = $_SERVER['DOCUMENT_ROOT'] . '/Archivos/IMAGEN/';
 					ssh2_scp_send($connection, $archivo['tmp_name'], $rutaUpdoad . $nombreArchivo, 0644);
 				}
-				*/
 				
 			} else {
 				$nombreArchivo = $TXT_VAL_IMAGEN;
