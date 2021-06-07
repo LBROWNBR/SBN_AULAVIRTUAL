@@ -159,7 +159,7 @@ switch ($_POST['op']) {
                 $mail->addAddress($email);
 
                 $mail->isHTML(true);
-                $mail->Subject = utf8_decode('Aula Virtual SBN - Confirmación de inscripción');
+                $mail->Subject = utf8_decode('Aula Virtual SBN - Confirmación de inscripción Docente');
                 
                 /*
                 $messageEmail = '';
@@ -172,7 +172,7 @@ switch ($_POST['op']) {
                 $messageEmail .= utf8_decode('Ya puedes iniciar sesión en <a href="https://aulavirtual.sbn.gob.pe/sdnc/login/index.php">https://aulavirtual.sbn.gob.pe/sdnc/login/index.php</a>');
                 */
 
-                				$messageEmail  = "<html><body>";  
+                $messageEmail  = "<html><body>";  
 				$messageEmail .= "<table width='100%' bgcolor='#e0e0e0' cellpadding='0' cellspacing='0' border='0'>";   
 				$messageEmail .= "<tr><td>";
 				$messageEmail .= "<br>";

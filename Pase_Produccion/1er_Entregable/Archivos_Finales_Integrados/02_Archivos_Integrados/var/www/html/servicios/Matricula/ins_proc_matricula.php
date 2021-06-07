@@ -142,7 +142,7 @@ if (empty($_POST['ID_USUARIO'])) {
 				$messageEmail .= "</table>";   
 				$messageEmail .= "</body></html>";
 
-				$mail->Body    = $messageEmail;
+				$mail->Body    = utf8_decode($messageEmail);
 				$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 				$mail->send();
 			} catch (Exception $e) {

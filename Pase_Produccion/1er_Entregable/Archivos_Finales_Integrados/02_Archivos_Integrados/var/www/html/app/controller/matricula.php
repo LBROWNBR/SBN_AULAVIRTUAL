@@ -298,7 +298,7 @@ switch ($_POST['op']) {
                 $messageEmail .= "</table>";
                 $messageEmail .= "</body></html>";
 
-                $mail->Body    = $messageEmail;
+                $mail->Body    = utf8_decode($messageEmail);
                 $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
                 if ($mail->send()) {
                     $cm->restablecer_Pass($email, $pass);
