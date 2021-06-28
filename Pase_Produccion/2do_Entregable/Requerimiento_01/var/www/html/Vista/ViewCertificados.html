@@ -1,0 +1,92 @@
+<style>
+    label.error {
+        float: none;
+        color: red;
+        padding-left: .5em;
+        vertical-align: middle;
+        font-size: 14px;
+    }
+</style>
+
+
+
+<section class="container">
+    <div class="card">
+        <h5 class="card-header bg-secondary text-white">Registro de Certificaci&oacute;n</h5>
+        <div class="card-body">
+
+            <div class="row">
+
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="combo_anios">A&ntilde;o : </label>
+                        <select class="form-control" id="CERT_Anio" onchange="combo_curso_by_anio_moodle();">
+                        <option value="" selected>Seleccione</option>
+                    </select>
+                    </div>
+                </div>
+
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <label for="combo_cursos">Nombre Curso : </label>
+                        <select class="form-control" id="CERT_Cursos">
+                        <option value="" selected>Seleccione</option>
+                    </select>
+                    </div>
+                </div>
+
+                <div class="col-md-2" style="padding-top: 25px;">
+                    <button type="button" class="btn btn-warning" onclick="Buscar_AlumnosCertificacion()"> <i class="fa fa-fw fa-search"></i> Buscar</button>
+                </div>
+
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-12">
+                    <hr>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div id="div_resultadoCertificacion"></div>
+
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-12">
+                    <br>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<div class="modal fade" id="ModalForm_Certificacion" tabindex="-1" role="dialog" aria-labelledby="largemodal" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="max-width: 95%;">
+        <div class="modal-content">
+            <div class="modal-header" style="background: #3F5367;">
+                <h5 class="modal-title" id="ModalForm_Certificacion" style="color: #FFFFFF;">REGISTRO DE CERTIFICACIONES</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: #FFFFFF;">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body" style="background: #ffffff;">
+                <div id="ModalBody_Certificacion"></div>
+            </div>
+            <div class="modal-footer" style="background: #E8E8E8;">
+                <button type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-danger" onclick="btn_Registrar_Certificados()">Registrar Cerficaci&oacute;n</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../Vista/JS/Paginas/Certificados.js"></script>
