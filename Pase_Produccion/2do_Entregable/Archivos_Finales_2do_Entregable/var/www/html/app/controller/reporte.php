@@ -108,7 +108,7 @@ switch ($_POST['op']) {
         $response = [
             'rep_cursoId' => $dataCURS[0]['course_id'],
             'rep_lugar' => 'SIN LUGAR',
-            'rep_cursoNombre' => $dataCURS[0]['course_name'],
+            'rep_cursoNombre' => $dataCURS[0]['course_name'].' ('.$dataCURS[0]['short_name'].')',
             'rep_cursoIni' => $dataCURS[0]['course_ini'],
             'rep_cursoFin' => $dataCURS[0]['course_fin'],
             'rep_detalle' => $dataMR,
@@ -205,7 +205,7 @@ switch ($_POST['op']) {
         $response = [
             'rep_cursoId' => $dataCURS[0]['course_id'],
             'rep_lugar' => 'SIN LUGAR',
-            'rep_cursoNombre' => $dataCURS[0]['course_name'],
+            'rep_cursoNombre' => $dataCURS[0]['course_name'].' ('.$dataCURS[0]['short_name'].')',
             'rep_entidadAsis' => count($entidades),
             'rep_entidadCert' => $contEntidadCert, //$numEntiCert,
             'rep_particiAsis' => [

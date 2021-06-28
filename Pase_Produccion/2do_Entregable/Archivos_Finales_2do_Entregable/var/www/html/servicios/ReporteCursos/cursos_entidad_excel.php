@@ -132,7 +132,7 @@ foreach ($entInscritas['dataCertificacion'] as $data) {
     $objPHPExcel->getActiveSheet()->setCellValue('E' . $fila, strtoupper($data['mdl_dist_lab']));
     $objPHPExcel->getActiveSheet()->setCellValue('F' . $fila, strtoupper($data['mat_fechaini'])); 
     $objPHPExcel->getActiveSheet()->setCellValue('G' . $fila, strtoupper($data['mat_fechafin']));
-    $objPHPExcel->getActiveSheet()->setCellValue('H' . $fila, strtoupper($data['mdl_cur_fullname'])); 
+    $objPHPExcel->getActiveSheet()->setCellValue('H' . $fila, strtoupper($data['mdl_cur_fullname'].' ('.$data['mdl_cur_shortname'].')')); 
     $objPHPExcel->getActiveSheet()->setCellValue('I' . $fila, strtoupper($data['mdl_entidad'])); 
     $objPHPExcel->getActiveSheet()->setCellValue('J' . $fila, strtoupper($data['mdl_nivelgrado'])); 
     $objPHPExcel->getActiveSheet()->setCellValue('K' . $fila, strtoupper(trim($data['mdl_apepat']).' '.trim($data['mdl_apemat']).' '.trim($data['mdl_nombres'])));

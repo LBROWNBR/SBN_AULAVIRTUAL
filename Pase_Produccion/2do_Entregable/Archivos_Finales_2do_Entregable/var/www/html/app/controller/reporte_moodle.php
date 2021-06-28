@@ -30,7 +30,7 @@ switch ($_POST['op']) {
             foreach ($dataCURS as $data) {
                 $combo[] = [
                     0 => $data['id'],
-                    1 => ucfirst(strtoupper($data['fullname'])),
+                    1 => ucfirst(strtoupper($data['fullname'])).' ('.strtoupper($data['shortname']).')',
                 ];
             }
             array_multisort(array_column($combo, 1), SORT_ASC, $combo);
@@ -114,7 +114,7 @@ switch ($_POST['op']) {
                 22 => html_utf8($discapacidad),                         // Discapacidad
                 23 => html_utf8($descDiscapac),                         // Descripcion discapacidad
 
-                24 => html_utf8($dataPREMATRICULAALUMNO[0]['mdl_cur_fullname']),      // Nombre del curso
+                24 => html_utf8($dataPREMATRICULAALUMNO[0]['mdl_cur_fullname'].' ('.$dataPREMATRICULAALUMNO[0]['mdl_cur_shortname'].')'),      // Nombre del curso
                 25 => html_utf8($dataPREMATRICULAALUMNO[0]['mat_fechaini']),          // mat_fechaini
                 26 => html_utf8($dataPREMATRICULAALUMNO[0]['mat_fechafin']),          // mat_fechafin
                 27 => html_utf8($dataPREMATRICULAALUMNO[0]['mat_modalidad']),          // mat_modalidad
@@ -159,7 +159,7 @@ switch ($_POST['op']) {
             }
             $listaAlumCursos[] = [
                 'course_id' => $curso['course_id'],
-                'course_name' => html_utf8($curso['course_name']),
+                'course_name' => html_utf8($curso['course_name'].' ('.$curso['short_name'].')'),
                 'course_ini' => html_utf8($curso['course_ini']),
                 'course_fin' => html_utf8($curso['course_fin']),
                 'user_entidad' => html_utf8($curso['user_entidad']),
@@ -287,7 +287,7 @@ switch ($_POST['op']) {
                 23 => html_utf8($adjuntoArchiv),                        // Adjuntó Archivo?
                 24 => !empty($dataCert) ? $dataCert[0]['code'] : '-',    // Codigo de certificado autogenerado
 
-                25 => html_utf8($dataPREMATRICULAALUMNO[0]['mdl_cur_fullname']),      // Nombre del curso
+                25 => html_utf8($dataPREMATRICULAALUMNO[0]['mdl_cur_fullname'].' ('.$dataPREMATRICULAALUMNO[0]['mdl_cur_shortname'].')'),      // Nombre del curso
                 26 => html_utf8($dataPREMATRICULAALUMNO[0]['mat_fechaini']),      // mat_fechaini
                 27 => html_utf8($dataPREMATRICULAALUMNO[0]['mat_fechafin']),      // mat_fechafin
                 28 => html_utf8($dataPREMATRICULAALUMNO[0]['mat_modalidad']),      // mat_modalidad
@@ -303,7 +303,7 @@ switch ($_POST['op']) {
         }
 
         $response = [
-            'curso' => count($dataCURS) > 0 ? $dataCURS[0]['course_name'] : null,
+            'curso' => count($dataCURS) > 0 ? $dataCURS[0]['course_name'].' ('.$dataCURS[0]['short_name'].')' : null,
             'datos' => $listaAlumCursos
         ];
         if (empty($dataCURS)) {
