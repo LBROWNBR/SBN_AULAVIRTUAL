@@ -1,0 +1,613 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <script src="../Vista/JS/Paginas/matricula.js"></script>
+    <style>
+        .ocultar {
+            display: none
+        }
+        
+        table tr td {
+            border: 0px;
+        }
+        
+        tr.spaceUnder>td {
+            padding-bottom: 0.5em;
+        }
+    </style>
+</head>
+
+<body class="modal-content">
+    <div id="errorphp">
+
+    </div>
+    <div class="content-page-container full-reset center-box clearfix">
+        <div class="centrartext">
+            <h1 id="h1Titulocurso" name="h1Titulocurso"></h1>
+        </div>
+        <img id="ImgCurso" class="img-course">
+
+        <form id="frmMatricula" name="frmMatricula" class="container">
+
+            <br>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="texto_arial_plomo_n_12 text-danger font-weight-bold">CURSO:</label>
+                        <input type="text" class="form-control" id="txtNomCursomatricula" disabled="disabled">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="texto_arial_plomo_n_12 text-danger font-weight-bold">DESCRIPCI&Oacute;N CORTA:</label>
+                        <input type="text" class="form-control" id="txtDescripCortaCursomatricula" disabled="disabled">
+                    </div>
+                </div>
+            </div>
+
+            <br>
+            <div class="texto_arial_plomo_n_12 text-danger font-weight-bold">DATOS PERSONALES
+                <input name="txt_cod_participante" type="hidden" id="txt_cod_participante" value="" maxlength="50">
+                <input name="TXT_ID_CURSO" type="hidden" id="TXT_ID_CURSO" size="30" value="20">
+                <input name="TXT_ID_MAT" type="hidden" id="TXT_ID_MAT" size="30" value="">
+                <input name="TXT_ID_DET_ENC" type="hidden" id="TXT_ID_DET_ENC" size="30" value="">
+                <input name="ACCION" type="hidden" id="ACCION" size="30" value="">
+                <input name="TXT_btn_adjuntar_oficio" type="hidden" id="TXT_btn_adjuntar_oficio" value="1">
+                <input type="hidden" name="MATR_UserFinal" value="true">
+                <input type="hidden" name="TXT_LIMITE_MATRICULADOS" id="TXT_LIMITE_MATRICULADOS" size="30" value="20">
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <label>Tipo de documento: </label>
+                </div>
+                <div class="col-md-2">
+                    <select id="cboTipoDocIdentidad" name="cboTipoDocIdentidad" class="form-control">
+						<option value="" selected="selected">Seleccione</option>
+						<option value="DNI">DNI</option>
+						<option value="CARNET EXT.">Carné de Extranjería</option>
+					</select>
+                </div>
+
+                <div class="col-md-2">
+                    <label>N° de documento: </label>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="txt_DNI" id="txt_DNI" placeholder="Digite" value="" maxlength="8">
+                            <div class="input-group-prepend">
+                                <button type="button" class="btn btn-danger" id="btnBuscardni" name="btnBuscardni" onclick="fnBuscaDni()">
+									<i class="fas fa-user-check"></i>
+								</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-1">
+                    <label>Nombres completos:</label>
+                </div>
+                <div class="col-md-3">
+                    <input name="txt_NOMBRE" type="text" style="text-transform:uppercase; background: rgb(238, 238, 238)" class="form-control" id="txt_NOMBRE" value="" maxlength="50">
+                </div>
+
+                <div class="col-md-1">
+                    <label>Ap. Paterno:</label>
+                </div>
+                <div class="col-md-3">
+                    <input name="txt_APEPAT" type="text" class="form-control" id="txt_APEPAT" style="text-transform:uppercase; background: rgb(238, 238, 238)" value="" maxlength="50">
+                </div>
+                <div class="col-md-1">
+                    <label>Ap. Materno:</label>
+                </div>
+                <div class="col-md-3">
+                    <input name="txt_APEMAT" type="text" style="text-transform:uppercase; background: rgb(238, 238, 238)" class="form-control" id="txt_APEMAT" value="" maxlength="50">
+                </div>
+            </div>
+            </br>
+
+            <div class="row">
+                <div class="col-md-1">
+                    <label>Profesión: </label>
+                </div>
+                <div class="col-md-3">
+                    <input name="txt_PROFESION" maxlength="50" type="text" class="form-control" id="txt_PROFESION" value="" style="text-transform:uppercase">
+                </div>
+                <div class="col-md-1">
+                    <label>Celular: </label>
+                </div>
+                <div class="col-md-3">
+                    <input name="txt_TELEF" type="text" class="form-control" id="txt_TELEF" value="" maxlength="9">
+                </div>
+                <div class="col-md-1">
+                    <label>Género: </label>
+                </div>
+                <div class="col-md-3">
+                    <select name="CBO_GENERO" id="CBO_GENERO" class="form-control">
+						<option value="">Seleccione</option>
+						<option value="F">Femenino</option>
+						<option value="M">Masculino</option>
+					</select>
+                </div>
+            </div>
+
+            </br>
+
+            <div class="row">
+                <div class="col-md-1">
+                    <label>E-mail personal: </label>
+                </div>
+                <div class="col-md-3">
+                    <input name="txt_CORREO" type="text" class="form-control" id="txt_CORREO" maxlength="100" style="text-transform:uppercase">
+                </div>
+                <div class="col-md-1">
+                    <label>Grado académico: </label>
+                </div>
+                <div class="col-md-3">
+                    <select name="CBO_GRADO_ACAD" id="CBO_GRADO_ACAD" class="form-control">
+						<option value="" selected="selected">Seleccione</option>
+						<option value="SECUNDARIA">Secundaria</option>
+						<option value="TECNICA_BASICA">Técnica Básica</option>
+						<option value="TECNICA_SUPERIOR">Técnica Superior</option>
+						<option value="UNIVERSITARIA">Universitaria</option>
+					</select>
+                </div>
+
+            </div>
+            <br>
+            <div class="texto_arial_plomo_n_12 text-danger font-weight-bold">
+                DATOS LABORALES
+            </div>
+
+            <div class="row">
+                <div class="col-md-1 my-2">
+                    <label>Nivel de gobierno: </label>
+                </div>
+                <div class="col-md-4">
+                    <select name="NIVEL_GOBIERNO" id="NIVEL_GOBIERNO" class="form-control">
+						<option value="" selected="selected">Seleccione</option>
+						<option value="Nacional">Nacional</option>
+						<option value="Regional">Regional</option>
+						<option value="Local">Local</option>
+					</select>
+                </div>
+            </div>
+            <div class="mb-3">
+                <small class="text-danger d-none" id="message_NG" style="display: block;">
+					Si el nivel de gobierno es <b>Regional</b> deberá elegir un nombre de Entidad.
+				</small>
+            </div>
+            <div class=" row">
+                <div class="col-md-1">
+                    <label>N° de RUC:</label>
+                </div>
+                <div class="col-md-4">
+                    <div class=" form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="txt_RUC_ENT" id="txt_RUC_ENT" placeholder="Digite el RUC" value="" maxlength="11">
+                            <div class="input-group-prepend">
+                                <button type="button" class="btn btn-danger" id="btnBuscarRUC" name="btnBuscarRUC">
+									<i class="fa fa-search"></i>
+								</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <label>Nombre entidad: </label>
+                </div>
+                <div class="col-md-5">
+                    <div class=" form-group">
+                        <div class="input-group">
+                            <input name="txt_ENTIDAD" type="text" class="form-control" id="txt_ENTIDAD" value="" style="text-transform:uppercase" maxlength="100" readonly="readonly">
+                            <div class="input-group-prepend">
+                                <button type="button" class="btn btn-danger" id="NG_open" data-toggle="modal" data-target="#modalEntidades" disabled>
+									<i class="fas fa-angle-down"></i>
+								</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <label>ÓRGANO/OFICINA/DIRECCIÓN/ÁREA (Ejemplo: Dirección Regional Agraria, Control Patrimonial,
+						Dirección de Acondicionamiento Territorial, etc.) (*):</label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <input type="text" class="form-control" name="txt_area" id="txt_area" maxlength="100">
+                </div>
+            </div>
+            </br>
+
+            <div class="row" style="display: none">
+                <div class="col-md-12">
+                    <label>UNIDAD EJECUTORA/OFICINA DESCONCENTRADA (Ejemplo: Comisaría, Oficina registral,
+						etc.):</label>
+                </div>
+            </div>
+
+            <div class="row" style="display: none">
+                <div class="col-md-12">
+                    <input type="text" class="form-control" name="txt_areaopcional" id="txt_areaopcional">
+                </div>
+            </div>
+            </br>
+
+            <div class="row">
+                <div class="col-md-2">
+                    <label>Departamento:</label>
+                </div>
+                <div class="col-md-2">
+                    <select name="COD_DPTO_LAB" class="form-control" id="COD_DPTO_LAB" class="form-control">
+						<option value="" selected="selected">Seleccione</option>
+						<option value="01">AMAZONAS</option>
+						<option value="02">ANCASH</option>
+						<option value="03">APURIMAC</option>
+						<option value="04">AREQUIPA</option>
+						<option value="05">AYACUCHO</option>
+						<option value="06">CAJAMARCA</option>
+						<option value="07">CALLAO</option>
+						<option value="08">CUSCO</option>
+						<option value="09">HUANCAVELICA</option>
+						<option value="10">HUANUCO</option>
+						<option value="11">ICA</option>
+						<option value="12">JUNIN</option>
+						<option value="13">LA LIBERTAD</option>
+						<option value="14">LAMBAYEQUE</option>
+						<option value="15">LIMA</option>
+						<option value="16">LORETO</option>
+						<option value="17">MADRE DE DIOS</option>
+						<option value="18">MOQUEGUA</option>
+						<option value="19">PASCO</option>
+						<option value="20">PIURA</option>
+						<option value="21">PUNO</option>
+						<option value="22">SAN MARTIN</option>
+						<option value="23">TACNA</option>
+						<option value="24">TUMBES</option>
+						<option value="25">UCAYALI</option>
+					</select>
+                </div>
+                <div class="col-md-1">
+                    <label>Provincia: </label>
+                </div>
+                <div class="col-md-3">
+                    <select name="COD_PROV_LAB" id="COD_PROV_LAB" class="form-control">
+						<option value="" selected="selected">Seleccione</option>
+						<option value="02">BARRANCA</option>
+						<option value="03">CAJATAMBO</option>
+						<option value="05">CANTA</option>
+						<option value="04">CAÑETE</option>
+						<option value="06">HUARAL</option>
+						<option value="07">HUAROCHIRI</option>
+						<option value="08">HUAURA</option>
+						<option value="01">LIMA</option>
+						<option value="09">OYON</option>
+						<option value="10">YAUYOS</option>
+					</select>
+                </div>
+                <div class="col-md-1">
+                    <label>Distrito: </label>
+                </div>
+                <div class="col-md-3">
+                    <select name="COD_DIST_LAB" id="COD_DIST_LAB" class="form-control">
+						<option value="" selected="selected">Seleccione</option>
+						<option value="02">AMBAR</option>
+						<option value="03">CALETA DE CARQUIN</option>
+						<option value="04">CHECRAS</option>
+						<option value="01">HUACHO</option>
+						<option value="05">HUALMAY</option>
+						<option value="06">HUAURA</option>
+						<option value="07">LEONCIO PRADO</option>
+						<option value="08">PACCHO</option>
+						<option value="09">SANTA LEONOR</option>
+						<option value="10">SANTA MARIA</option>
+						<option value="11">SAYAN</option>
+						<option value="12">VEGUETA</option>
+					</select>
+                </div>
+            </div>
+            </br>
+            <div class="row">
+                <!-- <div class="col-md-2">
+					<label>Nivel de gobierno: </label>
+				</div>
+				<div class="col-md-2">
+					<select name="NIVEL_GOBIERNO" id="NIVEL_GOBIERNO" onchange="OCULTAR_M4()" class="form-control">
+						<option value="" selected="selected">Seleccione</option>
+						<option value="Nacional">Nacional</option>
+						<option value="Regional">Regional</option>
+						<option value="Local">Local</option>
+					</select>
+				</div> -->
+                <div class="col-md-2">
+                    <label>Clasificación: </label>
+                </div>
+                <div class="col-md-2">
+                    <select name="cbro_rubro" id="cbro_rubro" class="form-control">
+						<option value="" selected="selected">Seleccione</option>
+						<option value="Funcionario Público">Funcionario Público</option>
+						<option value="Servidor Público">Servidor Público</option>
+					</select>
+                </div>
+                <div class="col-md-2">
+                    <label>Cargo: </label>
+                </div>
+                <div class="col-md-6">
+                    <input name="txt_CARGO" type="text" class="form-control" id="txt_CARGO" value="" maxlength="100" style="text-transform:uppercase;">
+                </div>
+            </div>
+            </br>
+            <div class="row">
+                <div class="col-md-2">
+                    <label>Modalidad contractual: </label>
+                </div>
+                <div class="col-md-2">
+                    <select name="MODALIDAD" id="MODALIDAD" onchange="fnmostrardesotros()" class="form-control">
+						<option value="" selected="selected">Seleccione</option>
+						<option value="CAS">CAS</option>
+						<option value="CAP">CAP</option>
+						<option value="Otros">Otros</option>
+					</select>
+                </div>
+            </div>
+
+            <div class="row" id="desc_modal">
+                <div class="col-md-2">
+                    <label>Especificar la modalidad: </label>
+                </div>
+                <div class="col-md-3">
+                    <input name="DESC_MODAL" type="text" class="form-control" id="DESC_MODAL" value="" maxlength="100" style="text-transform:uppercase">
+                </div>
+            </div>
+            </br>
+            <div class="row">
+                <div class="col-md-4">
+                    <label>Nro. de oficio de acreditación de la Entidad solicitante (*) :</label>
+                </div>
+                <div class="col-md-8">
+                    <input name="txt_nro_of_asignado" maxlength="100" type="text" class="form-control" id="txt_nro_of_asignado" value="" style="text-transform:uppercase">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <label class="btn btn-primary" for="txf_adjuntar_oficio">
+						<input type="file" accept="application/pdf" id="txf_adjuntar_oficio" name="txf_adjuntar_oficio"
+							style="display:none;" />
+						Adjuntar oficio
+					</label>
+                    <input name="TXT_VAL_OFICIO" type="hidden" class="form-control" id="TXT_VAL_OFICIO" value="">
+                    <label id="txf_adjuntar_oficio_lbl" name="txf_adjuntar_oficio_lbl"></label>
+                    <input name="TXT_VAL_RUTA_ARCH" type="hidden" id="TXT_VAL_RUTA_ARCH" value="">
+                    <!--  <input name="TXT_VAL_OFICIO" type="hidden" class="form-control" id="TXT_VAL_OFICIO" value=""> <input name="txf_adjuntar_oficio" type="file" value="Adjuntar oficio" id="txf_adjuntar_oficio" style="width:135px; background-color:#FF9" class="  "> -->
+                    <div id="div_label_archiv_oficio"></div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div>
+                    <input type="button" name="btn_ConfitmarReg" id="btn_ConfitmarReg" value="      Registrar      " onclick="REGISTRA_DATOS()" style="background-color:#900; height:50px; border-radius:20px; color:#FFFFFF">
+
+                    <input type="button" name="btn_Limpiar" id="btn_Limpiar" value="      Limpiar      " onclick="fnlimpiarMatricula()" style="background-color:#900; height:50px; border-radius:20px; color:#FFFFFF">
+
+                    <input type="button" name="BtnExportarExcel" id="BtnExportarExcel" value="      Exportar      " style="background-color:#900; height:50px; border-radius:20px; color:#FFFFFF" onclick="exportarexcel()">
+
+                    <input type="button" name="btn_Procesar" id="btn_Procesar" value="      Procesar      " onclick="fnProcesarInscritos()" style="background-color:#900; height:50px; border-radius:20px; color:#FFFFFF">
+                </div>
+
+            </div>
+
+            <!--
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-5">
+                    <select name="CBO_PROCESO" id="CBO_PROCESO" class="form-control centrarcombo">
+						<option value="1">Inscritos (Procesados)</option>
+						<option value="0" selected="selected">No procesados</option>
+					</select>
+                </div>
+                <div class="col-md-4"></div>
+            </div>
+            <div class="row">
+                <div class="col-md-6"></div>
+                <div class="col-md-4">
+                    <input type="button" name="btn_Procesar" id="btn_Procesar" value="      Consultar      " onclick="fnListarMatriculas()" style="background-color:#900; height:50px; border-radius:20px; color:#FFFFFF">
+                </div>
+                <div class="col-md-4"></div>
+            </div>
+            -->
+
+            <div class="row">
+                <div class="col-md-12"><br></div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Año:</label>
+                        <select class="form-control cursos" name="PROF_Anio" id="PROF_Anio" onchange="jsMostrarCursosByAnio()">
+                            <option value="" selected>Seleccione</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Curso:</label>
+                        <select class="form-control cursos" name="PROF_curso" id="PROF_curso">
+                            <option value="" selected>Seleccione</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Estado:</label>
+                        <select name="CBO_PROCESO" id="CBO_PROCESO" class="form-control centrarcombo">
+                            <option value="1">Inscritos (Procesados)</option>
+                            <option value="0" selected="selected">No procesados</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div style="margin-top: 25px;">
+                        <input type="button" name="btn_Procesar" id="btn_Procesar" value="      Consultar      " onclick="fnListarMatriculas()" style="background-color:#900; height:50px; border-radius:20px; color:#FFFFFF">
+                    </div>
+                </div>
+            </div>
+
+            <!--<input type="button" name="btn_Buscar" id="btn_Buscar" value="      Buscar      "  style="background-color:#900; height:50px; border-radius:20px; color:#FFFFFF" data-toggle="modal" data-target="#BtnModalBuscar">-->
+
+
+        </form>
+
+        <div class="modal fade" id="modalEntidades" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Seleccione una entidad</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-lg-8 col-md-12">
+                                <select class="form-control" id="NIVELGOB_ENTIDAD" size="10">
+									<option value="GOBIERNO REGIONAL DE LIMA">GOBIERNO REGIONAL DE LIMA</option>
+									<option value="GOBIERNO REGIONAL DE AMAZONAS">GOBIERNO REGIONAL DE AMAZONAS</option>
+									<option value="GOBIERNO REGIONAL DE ANCASH">GOBIERNO REGIONAL DE ANCASH</option>
+									<option value="GOBIERNO REGIONAL DE APURIMAC">GOBIERNO REGIONAL DE APURIMAC</option>
+									<option value="GOBIERNO REGIONAL DE AREQUIPA">GOBIERNO REGIONAL DE AREQUIPA</option>
+									<option value="GOBIERNO REGIONAL DE AYACUCHO">GOBIERNO REGIONAL DE AYACUCHO</option>
+									<option value="GOBIERNO REGIONAL DE CAJAMARCA">GOBIERNO REGIONAL DE CAJAMARCA
+									</option>
+									<option value="GOBIERNO REGIONAL DE CALLAO">GOBIERNO REGIONAL DE CALLAO</option>
+									<option value="GOBIERNO REGIONAL DE CUSCO">GOBIERNO REGIONAL DE CUSCO</option>
+									<option value="GOBIERNO REGIONAL DE HUANCAVELICA">GOBIERNO REGIONAL DE HUANCAVELICA
+									</option>
+									<option value="GOBIERNO REGIONAL DE HUÁNUCO">GOBIERNO REGIONAL DE HUÁNUCO</option>
+									<option value="GOBIERNO REGIONAL DE ICA">GOBIERNO REGIONAL DE ICA</option>
+									<option value="GOBIERNO REGIONAL DE JUNÍN">GOBIERNO REGIONAL DE JUNÍN</option>
+									<option value="GOBIERNO REGIONAL DE LA LIBERTAD">GOBIERNO REGIONAL DE LA LIBERTAD
+									</option>
+									<option value="GOBIERNO REGIONAL DE LAMBAYEQUE">GOBIERNO REGIONAL DE LAMBAYEQUE
+									</option>
+									<option value="GOBIERNO REGIONAL DE LORETO">GOBIERNO REGIONAL DE LORETO</option>
+									<option value="GOBIERNO REGIONAL DE MADRE DE DIOS">GOBIERNO REGIONAL DE MADRE DE
+										DIOS</option>
+									<option value="GOBIERNO REGIONAL DE MOQUEGUA">GOBIERNO REGIONAL DE MOQUEGUA</option>
+									<option value="GOBIERNO REGIONAL DE PASCO">GOBIERNO REGIONAL DE PASCO</option>
+									<option value="GOBIERNO REGIONAL DE PIURA">GOBIERNO REGIONAL DE PIURA</option>
+									<option value="GOBIERNO REGIONAL DE PUNO">GOBIERNO REGIONAL DE PUNO</option>
+									<option value="GOBIERNO REGIONAL DE SAN MARTÍN">GOBIERNO REGIONAL DE SAN MARTÍN
+									</option>
+									<option value="GOBIERNO REGIONAL DE TACNA">GOBIERNO REGIONAL DE TACNA</option>
+									<option value="GOBIERNO REGIONAL DE TUMBES">GOBIERNO REGIONAL DE TUMBES</option>
+									<option value="GOBIERNO REGIONAL DE UCAYALI">GOBIERNO REGIONAL DE UCAYALI</option>
+								</select>
+                            </div>
+                            <div class="col-lg-4 col-md-12">
+                                <button type="button" class="btn btn-primary btn-block my-2" id="btnSelectEntidad">
+									<i class="fas fa-check"></i> Seleccionar
+								</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary">Save</button> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="divTablamatricula" name="divTablamatricula" class="modal-body table-responsive">
+            <table class="table table-striped" id="tblMatricula" name="tblMatricula">
+                <thead>
+                    <th class="table-primary">FILA</th>
+                    <th class="table-primary">ACCION</th>
+                    <th class="ocultar">ID</th>
+                    <th class="table-primary">NOMBRE</th>
+                    <th class="table-primary">APE PATERNO</th>
+                    <th class="table-primary">APE MATERNO</th>
+                    <th class="table-primary">DNI</th>
+                    <th class="table-primary">PROFESION</th>
+                    <th class="ocultar">GENERO</th>
+                    <th class='ocultar'>GRADO</th>
+                    <th class="table-primary">Correo</th>
+                    <th class="table-primary">Celular</th>
+                    <th class='ocultar'> RUC</th>
+                    <th class='ocultar'>Nom. Entidiad</th>
+                    <th class='ocultar'>Departamento</th>
+                    <th class='ocultar'>Provincia</th>
+                    <th class='ocultar'>Distrito</th>
+                    <th class='ocultar'>Niv. Gobierno</th>
+                    <th class='ocultar'>Area</th>
+                    <th class='ocultar'>Cargo</th>
+                    <th class='ocultar'>Clasificacion</th>
+                    <th class='ocultar'>Modalidad</th>
+                    <th class='ocultar'>otra Modalidad</th>
+                    <th class="table-primary">Nro. Oficio</th>
+                    <th class="table-primary">Documento</th>
+                    <th class='ocultar'>Nom. Archivo</th>
+                    <th class='ocultar'>Ruta Archivo</th>
+                    <th class='ocultar'>Area Opcional</th>
+                    <th class='ocultar'>TIPO DE DOC.</th>
+                </thead>
+
+                <tbody id="tbMatricula" name="tbMatricula">
+                </tbody>
+            </table>
+        </div>
+
+
+
+
+        <!-- Modal -->
+        <div class="modal fade" width="200" id="BtnModalBuscar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Busqueda por DNI del matriculado</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="row">
+                            <div class="col col-lg-5" style="text-align:center">
+                                <label> DNI: </label>
+                            </div>
+                            <div class="col col-lg-5">
+                                <input type="text" id="TXT_DNI_MOD" name="TXT_DNI_MOD" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="fnListarMatriculasXdni()">Buscar</button>
+                        <button type="button" class="btn btn-primary">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

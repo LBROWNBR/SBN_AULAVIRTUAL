@@ -1,0 +1,84 @@
+<div class="row">
+
+    <div class="col-md-4 mt-4">
+        <div class="form-group">
+            <label for="PROF_Anio" class="font-weight-bold">A&ntilde;o:</label>
+            <select class="form-control" name="PROF_Anio" id="PROF_Anio" onchange="jsMostrarCursosByAnio()">
+                <option value="" selected>Seleccione</option>
+            </select>
+        </div>
+    </div>
+    <div class="col-md-4 mt-4">
+        <div class="form-group">
+            <label for="FILTRO_curso" class="font-weight-bold">Curso</label>
+            <select class="form-control" name="FILTRO_curso" id="FILTRO_curso">
+                <option disabled selected>Seleccione</option>
+            </select>
+        </div>
+    </div>
+    <div class="col-md-4 mt-4">
+        <div class="form-group">
+            <label for="FILTRO_proc" class="font-weight-bold">Estado</label>
+            <select class="form-control" name="FILTRO_proc" id="FILTRO_proc">
+                <option value="0">No procesados</option>
+                <option value="1">Inscritos (Procesados)</option>
+                <option value="%">Todos</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="col-md-12 mt-4">
+        <!-- <div style="text-align: center;">
+            <button type="button" class="btn btn-danger px-5 py-2" onclick="fnProcesarInscritos()">Procesar</button>
+        </div> -->
+        <div class="table-responsive">
+            <table class="table table-hover" id="tbl_participantes">
+                <thead class="table-primary">
+                    <tr>
+                        <th scope="col" width="5%">ITEM</th>
+                        <th scope="col" width="">DOCUMENTO</th>
+                        <th scope="col" width="">COD CURSO</th>
+                        <th scope="col" style="width:400 px;">CURSO</th>
+                        <th scope="col" width="">TIPO DOCUMENTO</th>
+                        <th scope="col" width="">DOCUMENTO</th>
+                        <th scope="col" width="">NOMBRES</th>
+                        <th scope="col" width="">APELLIDO</th>
+                        <th scope="col" width="">CORREO</th>
+                        <th scope="col" width="">CELULAR</th>
+                        <th scope="col" width="">N° OFICIO</th>
+                        <th scope="col" width="">PROFESION</th>
+                        <th scope="col" width="">GRADO</th>
+                        <th scope="col" width="">RUC</th>
+                        <th scopee="col" width="">ENTIDAD</th>
+                        <th scope="col" width="">DEPARTAMENTO</th>
+                        <th scope="col" width="">PROVINCIA</th>
+                        <th scope="col" width="">DISTRITO</th>
+                        <th scope="col" width="">NIVEL GOVIERNO</th>
+                        <th scope="col" width="">ÁREA</th>
+                        <th scope="col" width="">CARGO</th>
+                        <th scope="col" width="">CLASIFICACIÓN</th>
+                        <th scope="col" width="">MODO CONTRATO</th>
+                        <th scope="col" width="">CONTRATO OTROS</th>
+                        <th scope="col" width="">ÁREA (OPCIONAL)</th>
+                        <th scope="col" width="">FECHA DE REGISTRO</th>
+                        <th scope="col" width="">FECHA PROCESAMIENTO</th>
+                        <th scope="col" width="">FECHA INICIO</th>
+                        <th scope="col" width="">FECHA FIN</th>
+                        <th scope="col" width="">MODALIDAD</th>
+                        <th scope="col" width="">CODIGO POI</th>
+                        <th scope="col" width="">ESTADO PROCESADO</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <br>
+        </div>
+    </div>
+
+</div>
+
+<script src="../Vista/JS/Paginas/MatriculaSP.js"></script>

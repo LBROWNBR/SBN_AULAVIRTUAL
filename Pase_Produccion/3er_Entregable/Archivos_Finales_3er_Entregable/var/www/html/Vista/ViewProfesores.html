@@ -1,0 +1,115 @@
+<div class="row">
+    <div class="d-flex justify-content-center">
+        <form class="col-md-8 row" name="formProfesor" id="formProfesor" autocomplete="off">
+            <div class="form-group col-md-12 bg-danger">
+                <h5 class="text-light my-2">Inscribir Docente</h5>
+                <input type="hidden" name="PROF_id" id="PROF_id">
+            </div>
+            <!-- <div class="form-group col-md-6">
+                <label for="PROF_dni">DNI</label>
+                <input type="text" class="form-control" id="PROF_dni" name="PROF_dni">
+            </div> -->
+            <div class="form-group col-md-6">
+                <label for="PROF_curso">Tipo documento</label>
+                <select class="form-control" name="PROF_tipoDoc" id="PROF_tipoDoc">
+                    <option value="DNI">DNI</option>
+                    <option value="CDE">Carné de Extranjería</option>
+                </select>
+            </div>
+            <div class="form-group  col-md-6">
+                <label for="PROF_dni">N° documento</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="PROF_dni" name="PROF_dni" maxlength="8">
+                    <div class="input-group-prepend">
+                        <button type="button" class="btn btn-danger"><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="PROF_nombres">Nombres</label>
+                <input type="text" class="form-control" id="PROF_nombres" name="PROF_nombres" readonly>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="PROF_apePaterno">Apellido Paterno</label>
+                <input type="text" class="form-control" id="PROF_apePaterno" name="PROF_apePaterno" readonly>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="PROF_apeMaterno">Apellido Materno</label>
+                <input type="text" class="form-control" id="PROF_apeMaterno" name="PROF_apeMaterno" readonly>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="PROF_usuario">Usuario</label>
+                <input type="text" class="form-control" id="PROF_usuario" name="PROF_usuario" readonly>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="PROF_email">E-mail</label>
+                <input type="text" class="form-control" id="PROF_email" name="PROF_email">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="PROF_celular">Celular</label>
+                <input type="text" class="form-control" id="PROF_celular" name="PROF_celular" maxlength="9">
+            </div>
+
+            <div class="form-group col-md-12">
+                <label for="PROF_Anio">Año</label>
+                <select class="form-control" name="PROF_Anio" id="PROF_Anio" onchange="jsMostrarCursosByAnio()">
+                    <option disabled selected>Seleccione</option>
+                </select>
+            </div>
+
+            <div class="form-group col-md-12">
+                <label for="PROF_curso">Curso</label>
+                <select class="form-control cursos" name="PROF_curso" id="PROF_curso">
+                    <option disabled selected>Seleccione</option>
+                </select>
+            </div>
+            <div class="form-group col-md-12" style="text-align: center;">
+                <!-- <div class="row">
+                
+                </div> -->
+                <button type="submit" class="btn btn-danger px-5 py-2">Registrar</button>
+                <button type="button" class="btn btn-outline-danger px-5 py-2" onclick="clearFormProfesor()">Limpiar</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="col-md-3 mt-4">
+        <div class="form-group">
+            <label for="FILTRO_AnioCurso" class="font-weight-bold">Seleccione Año:</label>
+            <select class="form-control" name="FILTRO_AnioCurso" id="FILTRO_AnioCurso" onchange="jsFiltroMostrarCursosByAnio()">
+                <option disabled selected>Seleccione</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="col-md-9 mt-4">
+        <div class="form-group">
+            <label for="FILTRO_curso" class="font-weight-bold">Filtrar curso</label>
+            <select class="form-control" name="FILTRO_curso" id="FILTRO_curso">
+                <option disabled selected>Seleccione</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <table class="table table-hover" id="tbl_profesor">
+                <thead class="table-primary">
+                    <tr>
+                        <th scope="col" width="5%">N°</th>
+                        <th scope="col" width="5%">ACCION</th>
+                        <th scope="col" width="">DOCUMENTO</th>
+                        <th scope="col" width="">NOMBRES</th>
+                        <th scope="col" width="">APELLIDO</th>
+                        <th scope="col" width="">CORREO</th>
+                        <th scope="col" width="">USUARIO</th>
+                        <th scope="col" width="">CURSO</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+<script src="../Vista/JS/Paginas/Profesor.js"></script>

@@ -1,0 +1,466 @@
+<style>
+    label.error {
+        float: none;
+        color: red;
+        padding-left: .5em;
+        vertical-align: middle;
+        font-size: 14px;
+    }
+</style>
+
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Entidades</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Cuadro de resultados</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Alumnos</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="" data-toggle="tab" href="#tab_04" role="tab" aria-controls="tab_04" aria-selected="false">Entidades inscritas</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="" data-toggle="tab" href="#tab_05" role="tab" aria-controls="tab_04" aria-selected="false">Alumnos inscritos</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="" data-toggle="tab" href="#tab_06" role="tab" aria-controls="tab_04" aria-selected="false">Notas</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="" data-toggle="tab" href="#tab_07" role="tab" aria-controls="tab_04" aria-selected="false">Alumnos con cursos</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="" data-toggle="tab" href="#tab_08" role="tab" aria-controls="tab_04" aria-selected="false">Datos Abiertos</a>
+    </li>
+
+</ul>
+
+<div class="tab-content mt-3 mb-5" id="myTabContent">
+
+    <!-- 
+    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+        <h5>Reporte - Entidades (Total de funcionarios y servidores)</h5>
+        <div class="form-group">
+            <label for="combo_cursos">Nombre Curso : </label>
+            <select class="form-control combo_cursos_moodle" id="REP_sedes">
+                <option disabled selected>Seleccione</option>
+            </select>
+        </div>
+        <div style="text-align: center;">
+            <button type="button" class="btn btn-primary px-5 py-2" onclick="reporteCursosSedes()">Exportar</button>
+        </div>
+
+    </div>    
+    -->
+
+    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+        <section class="container">
+            <div class="card">
+                <h5 class="card-header bg-secondary text-white">Reporte - Entidades (Total de funcionarios y servidores)</h5>
+                <div class="card-body">
+                    <div class="row">
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="combo_anios">A&ntilde;o : </label>
+                                <select class="form-control combo_anios_moodle" id="cboAnio_R1" onchange="llenarComboCursoByAnio_moodle('cboAnio_R1', 'cboCursos_R1');">
+                            </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label for="combo_cursos">Nombre Curso : </label>
+                                <select class="form-control combo_cursos_moodle" id="cboCursos_R1">
+                                <option value="" selected>Seleccione</option>
+                            </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2" style="padding-top: 25px;">
+                            <button type="button" class="btn btn-primary" onclick="reporteExcel_Entidades()">Exportar Excel</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+
+    <!--
+    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+        <h5>Reporte - Cuadro de resultados</h5>
+        <div class="form-group">
+            <label for="REP_cuadroresultados">Nombre Curso : </label>
+            <select class="form-control combo_cursos_moodle" id="REP_cuadroresultados">
+                <option disabled selected>Seleccione</option>
+            </select>
+        </div>
+        <div style="text-align: center;">
+            <button type="button" class="btn btn-primary px-5 py-2" onclick="reporteCursosCuadroDeResultados()">Exportar</button>
+        </div>
+    </div>
+    -->
+
+    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+        <section class="container">
+            <div class="card">
+                <h5 class="card-header bg-secondary text-white">Reporte - Cuadro de resultados</h5>
+                <div class="card-body">
+                    <div class="row">
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="combo_anios">A&ntilde;o : </label>
+                                <select class="form-control combo_anios_moodle" id="cboAnio_R2" onchange="llenarComboCursoByAnio_moodle('cboAnio_R2', 'cboCursos_R2');">
+                            </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label for="combo_cursos">Nombre Curso : </label>
+                                <select class="form-control combo_cursos_moodle" id="cboCursos_R2">
+                                <option value="" selected>Seleccione</option>
+                            </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2" style="padding-top: 25px;">
+                            <button type="button" class="btn btn-primary" onclick="reporteExcel_CuadroResultados()">Exportar Excel</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+
+    <!--
+    <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+        <h5>Exportar inscritos</h5>
+        <div style="text-align: center;">
+            <button type="button" class="btn btn-primary px-4 py-2" onclick="reporteUsuariosMoodle()">
+                Exportar reporte de inscritos <i class="fas fa-file-download"></i>
+            </button>
+        </div>
+    </div>
+    -->
+
+
+    <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+        <section class="container">
+            <div class="card">
+                <h5 class="card-header bg-secondary text-white">Reporte - Alumnos</h5>
+                <div class="card-body">
+                    <div class="row">
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="combo_anios">A&ntilde;o : </label>
+                                <select class="form-control combo_anios_moodle" id="cboAnio_R3" onchange="llenarComboCursoByAnio_moodle('cboAnio_R3', 'cboCursos_R3');">
+                            </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label for="combo_cursos">Nombre Curso : </label>
+                                <select class="form-control combo_cursos_moodle" id="cboCursos_R3">
+                                <option value="" selected>Seleccione</option>
+                            </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2" style="padding-top: 25px;">
+                            <button type="button" class="btn btn-primary" onclick="reporteExcel_Alumnos()">Exportar Excel</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!--
+    <div class="tab-pane fade" id="tab_04" role="tabpanel" aria-labelledby="profile-tab">
+        <h5>Reporte - Entidades inscritas</h5>
+        <div class="form-group">
+            <label for="REP_EI_cursos">Nombre del curso : </label>
+            <select class="form-control combo_cursos_moodle" id="REP_EI_cursos">
+                <option disabled selected>Seleccione</option>
+            </select>
+        </div>
+        <div style="text-align: center;">
+            <button type="button" class="btn btn-primary px-5 py-2" onclick="reporteEntidadesInscritos()">Exportar</button>
+        </div>
+    </div>
+    -->
+
+
+    <div class="tab-pane fade" id="tab_04" role="tabpanel" aria-labelledby="profile-tab">
+        <section class="container">
+            <div class="card">
+                <h5 class="card-header bg-secondary text-white">Reporte - Entidades Inscritos</h5>
+                <div class="card-body">
+                    <div class="row">
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="combo_anios">A&ntilde;o : </label>
+                                <select class="form-control combo_anios_moodle" id="cboAnio_R4" onchange="llenarComboCursoByAnio_moodle('cboAnio_R4', 'cboCursos_R4');">
+                            </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label for="combo_cursos">Nombre Curso : </label>
+                                <select class="form-control combo_cursos_moodle" id="cboCursos_R4">
+                                <option value="" selected>Seleccione</option>
+                            </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2" style="padding-top: 25px;">
+                            <button type="button" class="btn btn-primary" onclick="reporteExcel_EntidadesIncritos()">Exportar Excel</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+
+    <!--
+    <div class="tab-pane fade" id="tab_05" role="tabpanel" aria-labelledby="profile-tab">
+        <h5>Reporte - Alumnos inscritos</h5>
+        <div class="form-group">
+            <label for="REP_EI_cursos">Nombre del curso : </label>
+            <select class="form-control combo_cursos_moodle" id="REP_AI_cursos">
+                <option disabled selected>Seleccione</option>
+            </select>
+        </div>
+        <div style="text-align: center;">
+            <button type="button" class="btn btn-primary px-5 py-2" onclick="reporteAlumnosInscritos()">Exportar</button>
+        </div>
+    </div>
+    -->
+
+    <div class="tab-pane fade" id="tab_05" role="tabpanel" aria-labelledby="profile-tab">
+        <section class="container">
+            <div class="card">
+                <h5 class="card-header bg-secondary text-white">Reporte - Alumnos Inscritos</h5>
+                <div class="card-body">
+                    <div class="row">
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="combo_anios">A&ntilde;o : </label>
+                                <select class="form-control combo_anios_moodle" id="cboAnio_R5" onchange="llenarComboCursoByAnio_moodle('cboAnio_R5', 'cboCursos_R5');">
+                            </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label for="combo_cursos">Nombre Curso : </label>
+                                <select class="form-control combo_cursos_moodle" id="cboCursos_R5">
+                                <option value="" selected>Seleccione</option>
+                            </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2" style="padding-top: 25px;">
+                            <button type="button" class="btn btn-primary" onclick="reporteExcel_AlumnosIncritos()">Exportar Excel</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+
+    <!--
+    <div class="tab-pane fade" id="tab_06" role="tabpanel" aria-labelledby="profile-tab">
+        <h5>Reporte - Notas</h5>
+        <div class="form-group">
+            <label for="REP_EI_cursos">Nombre del curso : </label>
+            <select class="form-control combo_cursos_moodle" id="REP_NOTAS_cursos">
+                <option disabled selected>Seleccione</option>
+            </select>
+        </div>
+        <div style="text-align: center;">
+            <button type="button" class="btn btn-primary px-5 py-2" onclick="reporteCursoNotas()">Exportar</button>
+        </div>
+    </div>
+    -->
+
+
+    <div class="tab-pane fade" id="tab_06" role="tabpanel" aria-labelledby="profile-tab">
+        <section class="container">
+            <div class="card">
+                <h5 class="card-header bg-secondary text-white">Reporte - Notas</h5>
+                <div class="card-body">
+                    <div class="row">
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="combo_anios">A&ntilde;o : </label>
+                                <select class="form-control combo_anios_moodle" id="cboAnio_R6" onchange="llenarComboCursoByAnio_moodle('cboAnio_R6', 'cboCursos_R6');">
+                            </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label for="combo_cursos">Nombre Curso : </label>
+                                <select class="form-control combo_cursos_moodle" id="cboCursos_R6">
+                                <option value="" selected>Seleccione</option>
+                            </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2" style="padding-top: 25px;">
+                            <button type="button" class="btn btn-primary" onclick="reporteExcel_Notas()">Exportar Excel</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+
+    <!--
+    <div class="tab-pane fade" id="tab_07" role="tabpanel" aria-labelledby="profile-tab">
+        <h5>Reporte - Alumnos que llevaron cursos</h5>
+        <form id="formAlumnosCursos" autocomplete="off">
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label for="">Filtro</label>
+                    <select class="form-control" name="REP_ALCU_filtro" id="REP_ALCU_filtro">
+                        <option value="Fecha de inicio">Fecha de inicio</option>
+                        <option value="Fecha de finalizacion">Fecha de finalizacion</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="">Desde</label>
+                    <input type="date" class="form-control" name="REP_ALCU_desde" id="REP_ALCU_desde">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="">Hasta</label>
+                    <input type="date" class="form-control" name="REP_ALCU_hasta" id="REP_ALCU_hasta">
+                </div>
+            </div>
+            <div style="text-align: center;">
+                <button type="submit" class="btn btn-primary px-5 py-2">Exportar</button>
+            </div>
+        </form>
+
+    </div>
+    -->
+
+    <div class="tab-pane fade" id="tab_07" role="tabpanel" aria-labelledby="profile-tab">
+        <section class="container">
+            <div class="card">
+                <h5 class="card-header bg-secondary text-white">Reporte - Alumnos que llevaron cursos</h5>
+                <div class="card-body">
+                    <form id="formAlumnosCursos" autocomplete="off">
+
+                        <!--
+                        <div class="row">
+                            <div class="form-group col-md-4">
+                                <label for="">Filtro</label>
+                                <select class="form-control" name="REP_ALCU_filtro" id="REP_ALCU_filtro">
+                                    <option value="Fecha de inicio">Fecha de inicio</option>
+                                    <option value="Fecha de finalizacion">Fecha de finalizacion</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="">Desde</label>
+                                <input type="date" class="form-control" name="REP_ALCU_desde" id="REP_ALCU_desde">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="">Hasta</label>
+                                <input type="date" class="form-control" name="REP_ALCU_hasta" id="REP_ALCU_hasta">
+                            </div>
+                        </div>
+                        <div style="text-align: center;">
+                            <button type="submit" class="btn btn-primary px-5 py-2">Exportar Excel</button>
+                        </div>
+                        -->
+
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="combo_anios">A&ntilde;o : </label>
+                                    <select class="form-control combo_anios_moodle" name="cboAnio_R7" id="cboAnio_R7" onchange="llenarComboCursoByAnio_moodle('cboAnio_R7', 'cboCursos_R7');">
+                                </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label for="combo_cursos">Nombre Curso : </label>
+                                    <select class="form-control combo_cursos_moodle" name="cboCursos_R7" id="cboCursos_R7">
+                                    <option value="" selected>Seleccione</option>
+                                </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-2" style="padding-top: 25px;">
+                                <button type="submit" class="btn btn-primary">Exportar Excel</button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+
+
+    <div class="tab-pane fade" id="tab_08" role="tabpanel" aria-labelledby="profile-tab">
+        <section class="container">
+            <div class="card">
+                <h5 class="card-header bg-secondary text-white">Reporte - Datos Abiertos</h5>
+                <div class="card-body">
+                    <div class="row">
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="combo_anios">A&ntilde;o : </label>
+                                <select class="form-control combo_anios_moodle" id="cboAnio_R8" onchange="llenarComboCursoByAnio_moodle('cboAnio_R8', 'cboCursos_R8');">
+                            </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label for="combo_cursos">Nombre Curso : </label>
+                                <select class="form-control combo_cursos_moodle" id="cboCursos_R8">
+                                <option value="" selected>Seleccione</option>
+                            </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2" style="padding-top: 25px;">
+                            <button type="button" class="btn btn-primary" onclick="reporte_DatosAbiertos()">Exportar Excel</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+
+</div>
+
+<script src="../Vista/JS/Paginas/Reporte.js"></script>
