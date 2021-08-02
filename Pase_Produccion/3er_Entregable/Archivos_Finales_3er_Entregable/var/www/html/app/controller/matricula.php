@@ -134,67 +134,74 @@ switch ($_POST['op']) {
         $estadoProc = $_POST['FILTRO_proc'];
         $dataMATR = $cm->get_Matricula_SP($idCurso, $estadoProc);
 
-        $mdl_course_shortname = $dataMATR[0]['course_shortname'];        
+        if(count($dataMATR)>0){
 
-        $acu = 0;
-        $response = [];
-        foreach ($dataMATR as $data) {
-            $acu++;
-            $verPDF = '';
-            if (!empty(trim($data['Mat_NombreArchivo'])) && file_exists('../..' . $data['Mat_RutaArchivo'] . $data['Mat_NombreArchivo'])) {
-                $rutaNombre = '"' . $data['Mat_RutaArchivo'] . '"';
-                $archNombre = '"' . $data['Mat_NombreArchivo'] . '"';
-                $verPDF = "<button type='button' class='btn btn-link' onClick='fnVerPDF($rutaNombre, $archNombre)'>Ver PDF</button>";
+            $mdl_course_shortname = $dataMATR[0]['course_shortname'];
+
+            $acu = 0;
+            $response = [];
+            foreach ($dataMATR as $data) {
+                $acu++;
+                $verPDF = '';
+                if (!empty(trim($data['Mat_NombreArchivo'])) && file_exists('../..' . $data['Mat_RutaArchivo'] . $data['Mat_NombreArchivo'])) {
+                    $rutaNombre = '"' . $data['Mat_RutaArchivo'] . '"';
+                    $archNombre = '"' . $data['Mat_NombreArchivo'] . '"';
+                    $verPDF = "<button type='button' class='btn btn-link' onClick='fnVerPDF($rutaNombre, $archNombre)'>Ver PDF</button>";
+                }
+
+                $dataCursoMatricula = $cpremat->Ver_Datos_Detallado_Curso_Matricula_By_Curso_Alumno($mdl_course_shortname, $data['Mat_DNI']);
+
+                $xPremat_fechaIni = ($dataCursoMatricula) ? $dataCursoMatricula[0]['fecha_ini'] : '';
+                $xPremat_fechaFin = ($dataCursoMatricula) ? $dataCursoMatricula[0]['fecha_fin'] : '';
+                $xPremat_cur_Modalidad = ($dataCursoMatricula) ? $dataCursoMatricula[0]['cur_Modalidad'] : '';
+                $xPremat_cur_CodPOI = ($dataCursoMatricula) ? $dataCursoMatricula[0]['cur_CodPOI'] : '';
+                $xPremat_Desc_procesado = ($dataCursoMatricula) ? $dataCursoMatricula[0]['Desc_procesado'] : '';
+
+                $response[] = [
+                    0 => $acu,
+                    // 1 => "<input type='checkbox' value='" . $data['Mat_ID'] . "'  class='form-check-input' id='idcheckbox' name='idcheckbox'>",				
+                    1 => $verPDF,
+                    2 => strtoupper($data['course_shortname']),
+                    3 => strtoupper($data['cur_Nombre']),
+                    4 => strtoupper($data['Mat_TipoDocIdent']),
+                    5 => strtoupper($data['Mat_DNI']),
+                    6 => strtoupper($data['Mat_Nombre']),
+                    7 => strtoupper($data['Mat_Paterno'].' '.$data['Mat_Materno']),
+                    8 => strtoupper($data['Mat_Correo']),
+                    9=> strtoupper($data['Mat_Celular']),
+                    10=> strtoupper($data['Mat_Oficio']),
+                    11 => strtoupper($data['Mat_Profesion']),
+                    12 => strtoupper($data['Mat_Grado']),
+                    13 => strtoupper($data['Mat_RUC']),
+                    14 => strtoupper($data['Mat_Entidad']),
+                    15 => strtoupper($data['Mat_Departamento']),
+                    16 => strtoupper($data['Mat_Provincia']),
+                    17 => strtoupper($data['Mat_Distrito']),
+                    18 => strtoupper($data['Mat_NivelGobierno']),
+                    19 => strtoupper($data['Mat_Area']),
+                    20 => strtoupper($data['Mat_Cargo']),
+                    21 => strtoupper($data['Mat_Clasificacion']),
+                    22 => strtoupper($data['Mat_ModoContrato']),
+                    23 => strtoupper($data['Mat_ContracOtros']),
+                    24 => strtoupper($data['Mat_AreaOpcional']),
+                    25 => strtoupper($data['fecha_create']),
+                    26 => strtoupper($data['Mat_Fecha_hora']),
+
+                    27 => strtoupper($xPremat_fechaIni),
+                    28 => strtoupper($xPremat_fechaFin),
+                    29 => strtoupper($xPremat_cur_Modalidad),
+                    30 => strtoupper($xPremat_cur_CodPOI),
+                    31 => strtoupper($xPremat_Desc_procesado)
+                ];
             }
+            $data['data'] = $response;
+            echo json_encode($data);
 
-
-            $dataCursoMatricula = $cpremat->Ver_Datos_Detallado_Curso_Matricula_By_Curso_Alumno($mdl_course_shortname, $data['Mat_DNI']);
-
-            $xPremat_fechaIni = ($dataCursoMatricula) ? $dataCursoMatricula[0]['fecha_ini'] : '';
-            $xPremat_fechaFin = ($dataCursoMatricula) ? $dataCursoMatricula[0]['fecha_fin'] : '';
-            $xPremat_cur_Modalidad = ($dataCursoMatricula) ? $dataCursoMatricula[0]['cur_Modalidad'] : '';
-            $xPremat_cur_CodPOI = ($dataCursoMatricula) ? $dataCursoMatricula[0]['cur_CodPOI'] : '';
-            $xPremat_Desc_procesado = ($dataCursoMatricula) ? $dataCursoMatricula[0]['Desc_procesado'] : '';
-
-            $response[] = [
-                0 => $acu,
-                // 1 => "<input type='checkbox' value='" . $data['Mat_ID'] . "'  class='form-check-input' id='idcheckbox' name='idcheckbox'>",				
-                1 => $verPDF,
-				2 => strtoupper($data['course_shortname']),
-				3 => strtoupper($data['cur_Nombre']),
-				4 => strtoupper($data['Mat_TipoDocIdent']),
-                5 => strtoupper($data['Mat_DNI']),
-                6 => strtoupper($data['Mat_Nombre']),
-                7 => strtoupper($data['Mat_Paterno'].' '.$data['Mat_Materno']),
-                8 => strtoupper($data['Mat_Correo']),
-                9=> strtoupper($data['Mat_Celular']),
-                10=> strtoupper($data['Mat_Oficio']),
-                11 => strtoupper($data['Mat_Profesion']),
-        		12 => strtoupper($data['Mat_Grado']),
-				13 => strtoupper($data['Mat_RUC']),
-				14 => strtoupper($data['Mat_Entidad']),
-				15 => strtoupper($data['Mat_Departamento']),
-				16 => strtoupper($data['Mat_Provincia']),
-				17 => strtoupper($data['Mat_Distrito']),
-				18 => strtoupper($data['Mat_NivelGobierno']),
-				19 => strtoupper($data['Mat_Area']),
-				20 => strtoupper($data['Mat_Cargo']),
-				21 => strtoupper($data['Mat_Clasificacion']),
-				22 => strtoupper($data['Mat_ModoContrato']),
-				23 => strtoupper($data['Mat_ContracOtros']),
-				24 => strtoupper($data['Mat_AreaOpcional']),
-                25 => strtoupper($data['fecha_create']),
-                26 => strtoupper($data['Mat_Fecha_hora']),
-
-                27 => strtoupper($xPremat_fechaIni),
-                28 => strtoupper($xPremat_fechaFin),
-                29 => strtoupper($xPremat_cur_Modalidad),
-                30 => strtoupper($xPremat_cur_CodPOI),
-                31 => strtoupper($xPremat_Desc_procesado)
-			];
+        }else{
+            $data = null;
+            echo json_encode($data);
         }
-        $data['data'] = $response;
-        echo json_encode($data);
+        
         break;
 
     case 'change_password':

@@ -270,7 +270,7 @@ $objPHPExcel->getActiveSheet()->getRowDimension('1')->setRowHeight(40);
 $objPHPExcel->getActiveSheet()->getRowDimension('2')->setRowHeight(0);
 $objPHPExcel->getActiveSheet()->getRowDimension('3')->setRowHeight(20);
 $objPHPExcel->getActiveSheet()->getRowDimension('4')->setRowHeight(20);
-$objPHPExcel->getActiveSheet()->getRowDimension('5')->setRowHeight(20);
+$objPHPExcel->getActiveSheet()->getRowDimension('5')->setRowHeight(30);
 $objPHPExcel->getActiveSheet()->getRowDimension('6')->setRowHeight(20);
 
 $objPHPExcel->getActiveSheet()->getStyle('B1:F1')->applyFromArray($styleTitulo);

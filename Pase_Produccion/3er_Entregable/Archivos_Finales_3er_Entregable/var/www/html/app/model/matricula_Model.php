@@ -110,6 +110,7 @@ class matricula_Model
         $sql = "
             SELECT
             mat.*,
+            (case when mat.Mat_Genero = 'M' then 'MASCULINO' else 'FEMENINO' end) AS 'Mat_Genero',
             c.cur_Nombre,
             c.course_shortname,
             c.cur_descripcion,
@@ -119,9 +120,18 @@ class matricula_Model
             c.cur_Modalidad,
             c.cur_NumEvent,
             c.cur_CodPOI,
-            (case when mat.Mat_Estado_proc = '1' then 'Inscritos (Procesados)' else 'No procesados' end) AS 'Desc_procesado'
+            (case when mat.Mat_Estado_proc = '1' then 'Inscritos (Procesados)' else 'No procesados' end) AS 'Desc_procesado',
+            concat(SUBSTRING(mat.ubi_codigo, 1, 2),'0000') as cod_depa,
+            depa.ubi_Nombre as Mat_Depa,
+            concat(SUBSTRING(mat.ubi_codigo, 1, 4),'00') as cod_prov,
+            prov.ubi_Nombre as Mat_Prov,
+            concat(SUBSTRING(mat.ubi_codigo, 1, 6)) as cod_dist,
+            dist.ubi_Nombre as Mat_Dist
             FROM tbl_matricula mat
             LEFT JOIN tbl_curso c ON (mat.cur_ID = c.cur_ID)
+            LEFT JOIN tbl_ubigeo depa ON (depa.ubi_codigo = concat(SUBSTRING(mat.ubi_codigo, 1, 2),'0000'))
+            LEFT JOIN tbl_ubigeo prov ON (prov.ubi_codigo = concat(SUBSTRING(mat.ubi_codigo, 1, 4),'00'))
+            LEFT JOIN tbl_ubigeo dist ON (dist.ubi_codigo = concat(SUBSTRING(mat.ubi_codigo, 1, 6)))
             WHERE c.cur_ID>0
             AND c.course_shortname = ?
             AND mat.Mat_DNI = ?

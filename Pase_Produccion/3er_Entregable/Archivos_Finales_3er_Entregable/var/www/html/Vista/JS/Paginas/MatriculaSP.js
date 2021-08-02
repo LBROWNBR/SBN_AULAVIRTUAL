@@ -56,6 +56,7 @@ var listado = () => {
     var vcursocbo = $('select[name="FILTRO_curso"] option:selected').text();
     var vestadocbo = $('select[name="FILTRO_proc"] option:selected').text();
 
+    var FILTRO_anio = $('select[name="PROF_Anio"] option:selected').val();
     var FILTRO_curso = $('select[name="FILTRO_curso"] option:selected').val();
     var FILTRO_proc = $('select[name="FILTRO_proc"] option:selected').val();
 
@@ -67,8 +68,6 @@ var listado = () => {
                 op: 'matricula_sin_procesar',
                 FILTRO_curso: FILTRO_curso,
                 FILTRO_proc: FILTRO_proc
-                    //FILTRO_curso: function() { return $('#FILTRO_curso').val() },
-                    //FILTRO_proc: function() { return $('#FILTRO_proc').val() }
             }
         },
         "language": idioma_espanol,
@@ -81,7 +80,15 @@ var listado = () => {
                 columns: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
             }
         }],
+        "createdRow": function(row, data, dataIndex) {
+            if (data[0] % 2 == 0) {
+                $(row).css("background-color", "#cecfd0");
+            } else {
+                $(row).css("background-color", "#c5dfd7");
+            }
+        }
     });
+
 }
 
 var fnVerPDF = (ruta, nombre) => {

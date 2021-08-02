@@ -75,14 +75,16 @@ class reporte_moodle_Model
         C.`shortname` AS 'short_name',
         FROM_UNIXTIME(C.`startdate`, '%d/%m/%Y') AS 'course_ini',
         FROM_UNIXTIME(C.`enddate`, '%d/%m/%Y') AS 'course_fin',
-        U.`institution` AS 'user_entidad'
+        U.`institution` AS 'user_entidad',
+        U.`username` AS 'user_DNI'
         FROM mdl_user U
         INNER JOIN mdl_role_assignments RA ON RA.`userid` = U.`id`
         INNER JOIN mdl_role R ON R.`id` = RA.`roleid`
         INNER JOIN mdl_user_enrolments UE ON UE.`userid` = U.`id`
         INNER JOIN mdl_enrol ER ON ER.`id` = UE.`enrolid`
         INNER JOIN mdl_course C ON C.`id` = ER.`courseid`
-        WHERE R.`id` = '5' AND C.`id` = ? GROUP BY U.`id`, C.`id`";
+        WHERE R.`id` = '5' AND C.`id` = ? 
+        GROUP BY U.`id`, C.`id`";
         $param = array($idCurso);
         return $this->db->query($sql, $param);
     }
@@ -90,7 +92,8 @@ class reporte_moodle_Model
     public function getUsuariosWithNota($idCurso)
     {
         $sql = "SELECT
-        U.`id` AS 'user_id'
+        U.`id` AS 'user_id',
+        U.`username` AS 'user_DNI'
         FROM mdl_course C
         INNER JOIN mdl_grade_items GI ON GI.`courseid` = C.`id`
         INNER JOIN mdl_grade_grades GG ON GG.`itemid` = GI.`id`
@@ -98,7 +101,7 @@ class reporte_moodle_Model
         INNER JOIN mdl_role_assignments RA ON RA.`userid` = U.`id`
         INNER JOIN mdl_role R ON R.`id` = RA.`roleid`
         WHERE R.`id` = '5' AND C.`id` = ?
-        GROUP BY U.`id` ";
+        GROUP BY U.`id`, U.`username` ";
         $param = array($idCurso);
         return $this->db->query($sql, $param);
     }

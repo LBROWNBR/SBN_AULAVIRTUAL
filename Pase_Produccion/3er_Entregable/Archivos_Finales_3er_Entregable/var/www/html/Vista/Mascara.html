@@ -1,0 +1,236 @@
+<html lang="es">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <meta charset="utf-8">
+
+    <title> Cursos abiertos SBN </title>
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+      <link href="../Vista/css/matricula.css" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.js"></script>
+    <!--<link href="../Vista/css/bootstrap.css" rel="stylesheet">
+    <script src="../Vista/JS/bootstrap.js"></script>-->
+    <link href="../Vista/css/jquery.datatables.css" rel="stylesheet">
+    <script src="../Vista/JS/jquery.datatables.js"></script>
+    <script src="../Vista/JS/Paginas/General.js"></script>
+    <script src="../Vista/JS/jquery-ui.js"></script>
+    <script src="../Vista/JS/shieldui-all.min.js"></script>
+    <link href="../Vista/css/jquery-ui.css" rel="stylesheet">
+    <script src="../Vista/JS/datepicker-es.js"></script>
+
+    <meta http-equiv="Content-Language" name="language" content="es">
+    <meta name="distribution" content="Global">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Styles -->
+
+    <link href="https://www.sbn.gob.pe/assets/css/sbn-style.css?v=311091.10" rel="stylesheet">
+
+    <script src="../Vista/JS/Paginas/Mascara.js"></script>
+<style>
+        .ocultar{
+            display:none;
+        }
+        table tr td{
+            border:0px;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="app">
+        <header id="header" class="header ">
+            <!-- CABECERA -->
+            <nav class="navbar nav-red ">
+                <div class="container-fluid">
+                    <div class="navbar-left">
+
+
+                        <div class="twitter-scroll">
+
+                            <div class="dap-tw-logo">
+                                <h6>Tweets SBN</h6>
+                            </div>
+                            <div class="marquee" direction="left" behavior="alternate" loop="infinit" scrollamount="5">
+                                <div style="width: 100000px; margin-left: 0px; animation: 48.6817s linear 0s infinite normal none running marqueeAnimation-1157410;" class="js-marquee-wrapper">
+                                    <div class="js-marquee" style="margin-right: 100px; float: left;">
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <form class="navbar-form navbar-right">
+                        <div class="form-group  has-feedback">
+                            <input type="text" class="form-control" placeholder="Ingresa aquí tu búsqueda:">
+                            <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
+                        </div>
+                    </form>
+                    <!-- REDES SOCIALES -->|
+                    <aside class="container-build">
+                        <ul class="social-buttons pull-right" id="redes-sociales">
+                            <li>
+                                <a href="https://www.facebook.com/sbnperu/" class="brandico-facebook"><img src="https://image.flaticon.com/icons/svg/59/59439.svg" alt="logo de facebook icono gratis" title="logo de facebook icono gratis" width="25" height="25"></a>
+                            </li>
+                            <li>
+                                <a href="https://twitter.com/sbn_peru?lang=es" class="brandico-twitter-bird"><img src="https://img.icons8.com/metro/26/000000/twitter.png"></a>
+                            </li>
+                            <li>
+                                <a href="https://www.youtube.com/channel/UCSfgTnUWqdKlMLero7aPSQw" class="brandico-youtube"><img src="https://img.icons8.com/metro/26/000000/youtube.png"></a>
+                            </li>
+                            <li>
+                                <a href="https://www.flickr.com/photos/152709441@N05/albums" class="brandico-flickr"><img src="https://img.icons8.com/metro/26/000000/spinner-frame-2.png"></a>
+                            </li>
+                        </ul>
+                    </aside>
+                    <!-- END REDES SOCIALES -->
+
+                </div>
+            </nav>
+            <!-- END CABECERA -->
+            <style>
+                .no-hover:hover {
+                    background-color: #fff !important;
+                }
+
+                table tr td {
+                    border: 1px solid #dcdcdc;
+                    padding: 10px 20px;
+                    padding-top: 10px;
+                    padding-right: 20px;
+                    padding-bottom: 10px;
+                    padding-left: 20px;
+                }
+            </style>
+
+            <ul class="nav justify-content-center">
+                <li class="nav-item">
+                <a class="nav-link active" onclick="fnrefrescar()"> INICIO</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" onclick="fnhrefpagina('../Vista/ViewCronograma.html')">CRONOGRAMA ANUAL</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" onclick="fnhrefpagina('../Vista/ViewCursos.html')"> CURSOS</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="#">PREGUNTAS FRECUENTES</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="#">GALERÍA</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="http://aulavirtual.sbn.gob.pe/sdnc/">AULA VIRTUAL</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="#">CONTÁCTENOS</a>
+                </li>
+                
+            </ul>
+
+
+            <!--<table>
+                <tr align="center" bottom="middle" style="width: 100%">
+                    <td style="width:auto;"><a onclick="fnrefrescar()"> INICIO</a></td>
+                    <td style="width:auto;"><a onclick="fnhrefpagina('../Vista/ViewCronograma.html')">CRONOGRAMA ANUAL</a></td>
+                    <td style="width:auto;"><a onclick="fnhrefpagina('../Vista/ViewCursos.html')"> CURSOS</a></td>
+                    <td style="width:auto;">PREGUNTAS FRECUENTES</td>
+                    <td style="width:auto;">GALERÍA</td>
+                    <td style="width:auto;"><a href="http://aulavirtual.sbn.gob.pe/sdnc/">AULA VIRTUAL</a></td>
+                    <td style="width:auto;">CONTÁCTENOS </td>
+                </tr>
+            </table>-->
+
+
+        </header><!-- /header -->
+
+        <main id="wrapper" class="py-4">
+
+
+            <style>
+                .card-list .card {
+                    border: none;
+                    min-height: 8rem;
+                }
+
+                .card-body a {
+                    color: #000
+                }
+
+                .wrapper .card-body {
+                    min-height: 13rem;
+                }
+
+
+                @-webkit-keyframes marqueeAnimation-115741 {
+                    100% {
+                        margin-left: -5425px
+                    }
+                }
+
+                @-webkit-keyframes marqueeAnimation-1157410 {
+                    100% {
+                        margin-left: -5425px
+                    }
+                }
+            </style>
+            <div class="container-fluid story" style="background-color: white">
+                <!--fusion-page-title-row row story-header-->
+                <div class="container" id="DivContenido" style="width:100%;background-color: white;">
+                    <div class="fusion-page-title-wrapper col-md-12 title-page">
+                        <div class="container">
+                            <section><img src="https://www.sbn.gob.pe/Repositorio/BannerCapac/BANCAP_37_71ca.jpg" class="TABLE_border4" width="100%" height="300px"></section>
+                        </div>
+                    </div>
+                    <main id="mains" class="container ">
+                        <div class="col-md-13">
+                            <div class="post-content post-normativdad">
+                                <div class="contenido cite-content">
+                                    <nav aria-label="breadcrumb">
+
+                                    </nav>
+
+                                    <div class="card-lists" style="width: 100%;height: 100%">
+                                        <div class="card-list-body row wrapper" style="width: 100%;height:  100%" id="divListaCursos" name="divListaCursos">
+
+
+                                        </div>
+
+
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </main>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+
+    
+
+
+    <footer>
+        <section class="footer-end">
+            <div class="container text-center">
+                <p>Copyright 2019 Cursos virtuales</p>
+            </div>
+        </section>
+    </footer>
+
+
+
+
+
+
+</body>
+</html>

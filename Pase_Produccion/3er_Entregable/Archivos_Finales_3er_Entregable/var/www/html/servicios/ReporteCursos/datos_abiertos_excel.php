@@ -138,17 +138,17 @@ foreach ($datos['datos'] as $data) {
 
 $fila = $fila - 1;
 
-$objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth("5");
-$objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth("25");
-$objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth("25");
-$objPHPExcel->getActiveSheet()->getColumnDimension('D')->setWidth("25");
-$objPHPExcel->getActiveSheet()->getColumnDimension('E')->setWidth("40");
-$objPHPExcel->getActiveSheet()->getColumnDimension('F')->setWidth("20");
-$objPHPExcel->getActiveSheet()->getColumnDimension('G')->setWidth("20");
-$objPHPExcel->getActiveSheet()->getColumnDimension('H')->setWidth("40");
+$objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth("15");
+$objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth("90");
+$objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth("18");
+$objPHPExcel->getActiveSheet()->getColumnDimension('D')->setWidth("18");
+$objPHPExcel->getActiveSheet()->getColumnDimension('E')->setWidth("18");
+$objPHPExcel->getActiveSheet()->getColumnDimension('F')->setWidth("18");
+$objPHPExcel->getActiveSheet()->getColumnDimension('G')->setWidth("25");
+$objPHPExcel->getActiveSheet()->getColumnDimension('H')->setWidth("20");
 $objPHPExcel->getActiveSheet()->getColumnDimension('I')->setWidth("20");
-$objPHPExcel->getActiveSheet()->getColumnDimension('J')->setWidth("20");
-$objPHPExcel->getActiveSheet()->getColumnDimension('K')->setWidth("20");
+$objPHPExcel->getActiveSheet()->getColumnDimension('J')->setWidth("25");
+$objPHPExcel->getActiveSheet()->getColumnDimension('K')->setWidth("90");
 $objPHPExcel->getActiveSheet()->getColumnDimension('L')->setWidth("20");
 $objPHPExcel->getActiveSheet()->getColumnDimension('M')->setWidth("20");
 $objPHPExcel->getActiveSheet()->getColumnDimension('N')->setWidth("20");

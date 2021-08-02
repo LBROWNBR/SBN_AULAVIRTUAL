@@ -60,16 +60,21 @@ switch ($_POST['op']) {
         //$dataUM = $rm->getUsuariosInscritos();
         $dataUM = $rm->getCursosWithUsuariosInscritos($_POST['id_curso']);      
         $dataActividad = $rm->getActividades_By_CourseID($_POST['id_curso']);   
-        $dataCurso = $rm->getCourse_By_ID($_POST['id_curso']);   
-
-        
+        $dataCurso = $rm->getCourse_By_ID($_POST['id_curso']);
         
         $acu = 0;
         foreach ($dataUM as $user) {
-            $id = $user['user_id'];
-            $dataUSER = $rm->getUsuario($id);
-            $dataFU = $rm->getUsuarioDataField($id);
-            $dataPREMATRICULAALUMNO = $cpremat->Listar_DataCertificados_By_Idcurso_IdUserMoodle($_POST['id_curso'], $id); 
+
+            $mdl_UserId = $user['user_id'];
+            $mdl_DNI = $user['user_DNI'];
+            $mdl_Course_shortname = $user['short_name'];
+
+            $dataUSER = $rm->getUsuario($mdl_UserId);
+            $dataFU = $rm->getUsuarioDataField($mdl_UserId);
+            $dataCPremat_CursoMatricula = $cpremat->Ver_Datos_Detallado_Curso_Matricula_By_Curso_Alumno($mdl_Course_shortname, $mdl_DNI);
+            $dataCPremat_Certificado = $cpremat->Listar_DataCertificados_By_Idcurso_IdUserMoodle($_POST['id_curso'], $mdl_UserId); 
+            $dataCPremat_Curso = $cpremat->get_CursosByShortname($mdl_Course_shortname);
+
             $apellidoMater = '';
             $nivelGobierno = '';
             $rubro = '';
@@ -88,72 +93,80 @@ switch ($_POST['op']) {
             $descDiscapac = '';
             if (count($dataFU) > 0) {
                 getDatosFU($dataFU);
-            }
-            
-            $acu++;
+            }            
 
-            $xNombreCurso_Moodle = $dataCurso[0]['fullname'].' ('.$dataCurso[0]['shortname'].')';
+            $v_Mat_Materno = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Materno'] : '';
+            $v_Mat_Paterno = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Paterno'] : '';
+            $v_Mat_Nombre = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Nombre'] : '';
+            $v_Mat_DNI = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_DNI'] : '';
+            $v_Mat_Entidad = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Entidad'] : '';
+            $v_Mat_Cargo = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Cargo'] : '';
+            $v_Mat_Area = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Area'] : '';
+            $v_Mat_Profesion = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Profesion'] : '';
+            $v_Mat_NivelGobierno = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_NivelGobierno'] : '';
+            $v_Mat_Clasificacion = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Clasificacion'] : '';
+            $v_Mat_ModoContrato = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_ModoContrato'] : '';
+            $v_Mat_Correo = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Correo'] : '';
+            $v_Mat_Celular = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Celular'] : '';
+            $v_Mat_Oficio = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Oficio'] : '';
+            $v_Mat_Genero = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Genero'] : '';
+            $v_Mat_Grado = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Grado'] : '';
+            $v_Mat_Depa = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Depa'] : '';
+            $v_Mat_Prov = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Prov'] : '';
+            $v_Mat_Dist = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Dist'] : '';
 
-            $x_Mat_Entidad = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['mdl_entidad'] : '';
-            $x_Mat_Cargo = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['mdl_cargo'] : '';
-            $x_Mat_Area = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['mdl_area_lab'] : '';
-            $x_Mat_Profesion = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['mdl_profesion'] : '';
-            $x_Mat_NivelGobierno = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['mdl_nivelgrado'] : '';
-            $x_Mat_Rubro = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['mdl_rubro'] : '';
-            $x_Mat_ModoContrato = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['mdl_tipocontrato'] : '';            
+            if(count($dataCPremat_Certificado)>0){
+                $sConCertificado = ($dataCPremat_Certificado) ? $dataCPremat_Certificado[0]['ConCertificado'] : '';
+                $x_ConCertificado = ($sConCertificado== '1') ? 'SI' : 'NO';
+                $x_CodigoCertificado = ($dataCPremat_Certificado) ? $dataCPremat_Certificado[0]['NroCertificado'] : '';                
+            }else{
+                $x_ConCertificado = '';
+                $x_CodigoCertificado = '';
+            }            
 
-            $x_mdl_cur_fullname = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['mdl_cur_fullname'] : '';
-            $x_mdl_cur_shortname = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['mdl_cur_shortname'] : '';
-            $x_mat_fechaini = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['mat_fechaini'] : '';
-            $x_mat_fechafin = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['mat_fechafin'] : '';
-            $x_mat_modalidad = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['mat_modalidad'] : '';
-            $x_mat_horalectiva = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['mat_horalectiva'] : '';
-            $x_ConCertificado = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['ConCertificado'] : '';
-            $x_NroCertificado = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['NroCertificado'] : '';
-            $ConCertificado = ($x_ConCertificado== '1') ? 'SI' : 'NO';
+            if($v_Mat_Materno!=''){
 
-            if($x_Mat_Entidad != ''){
+                $acu++;
 
-                $NotasAlumno = $rm->getNotasCourse_By_CourseID_UserId($id, $_POST['id_curso']);
+                $NotasAlumno = $rm->getNotasCourse_By_CourseID_UserId($mdl_UserId, $_POST['id_curso']);
+
                 $response[] = [
-                    0 => $acu,                                              // N°
-                    1 => html_utf8($dataUSER[0]['lastname']),               // Apellido Materno
-                    2 => html_utf8($apellidoMater),                         // Apellido Paterno
-                    3 => html_utf8($dataUSER[0]['firstname']),              // Nombres
-                    4 => html_utf8($dataUSER[0]['username']),               // Username
-                    5 => html_utf8($dataUSER[0]['username']),               // DNI
-                    6 => html_utf8($x_Mat_Entidad), //html_utf8($dataUSER[0]['institution']),            // Entidad
-                    7 => html_utf8($x_Mat_Cargo),                                 // Cargo
-                    8 => html_utf8($x_Mat_Area),             // Area
-                    9 => html_utf8($x_Mat_Profesion),                                 // Profesion
-                    10 => html_utf8($x_Mat_NivelGobierno),                        // Nivel gobierno
-                    11 => html_utf8($x_Mat_Rubro),                                // Rubro
-                    12 => html_utf8($x_Mat_ModoContrato),                            // Modalidad
-                    13 => html_utf8($descModalidad),                        // Descripcion Modalidad
-                    14 => html_utf8($dataUSER[0]['email']),                 // Correo Electronico
-                    15 => html_utf8($dataUSER[0]['phone2']),                // Telefono
-                    16 => html_utf8($dataUSER[0]['department']),            // Departamento laboral
-                    17 => html_utf8($provinLaboral),                        // Provincia laboral
-                    18 => html_utf8($distriLaboral),                        // Distrito laboral
-                    19 => html_utf8($numOficioDesc),                        // Nro de oficio de inscripción
-                    20 => html_utf8($gener),                                // Genero
-                    21 => html_utf8($gradoAcademic),                        // Grado academico
+                    0 => $acu,                                                                  // N°
+                    1 => html_utf8(trim($v_Mat_Materno)),        // Apellido Materno
+                    2 => html_utf8(trim($v_Mat_Paterno)),        // Apellido Paterno
+                    3 => html_utf8(trim($v_Mat_Nombre)),         // Nombres
+                    4 => html_utf8($dataUSER[0]['username']),                                   // Username
+                    5 => html_utf8(trim($v_Mat_DNI)),            // DNI
+                    6 => html_utf8(trim($v_Mat_Entidad)),        // Entidad
+                    7 => html_utf8(trim($v_Mat_Cargo)),          // Cargo
+                    8 => html_utf8(trim($v_Mat_Area)),           // Area
+                    9 => html_utf8(trim($v_Mat_Profesion)),      // Profesion
+                    10 => html_utf8(trim($v_Mat_NivelGobierno)), // Nivel gobierno
+                    11 => html_utf8(trim($v_Mat_Clasificacion)), // Rubro
+                    12 => html_utf8(trim($v_Mat_ModoContrato)),  // Modalidad
+                    13 => html_utf8($descModalidad),                                            // Descripcion Modalidad
+                    14 => html_utf8(trim($v_Mat_Correo)),        // Correo Electronico
+                    15 => html_utf8(trim($v_Mat_Celular)),       // Telefono
+                    16 => html_utf8($v_Mat_Depa),            // Departamento laboral
+                    17 => html_utf8($v_Mat_Prov),                        // Provincia laboral
+                    18 => html_utf8($v_Mat_Dist),                        // Distrito laboral
+                    19 => html_utf8($v_Mat_Oficio),                         // Nro de oficio de inscripción
+                    20 => html_utf8($v_Mat_Genero),                         // Genero
+                    21 => html_utf8($v_Mat_Grado),                          // Grado academico
                     22 => html_utf8($discapacidad),                         // Discapacidad
                     23 => html_utf8($descDiscapac),                         // Descripcion discapacidad
 
-                    24 => html_utf8($xNombreCurso_Moodle),      // Nombre del curso
-                    25 => html_utf8($x_mat_fechaini),          // mat_fechaini
-                    26 => html_utf8($x_mat_fechafin),          // mat_fechafin
-                    27 => html_utf8($x_mat_modalidad),         // mat_modalidad
-                    28 => html_utf8($x_mat_horalectiva),       // mat_horalectiva                
-                    29 => html_utf8($ConCertificado),          // ConCertificado
-                    30 => html_utf8($x_NroCertificado),        // Nro Certificado
+                    24 => html_utf8(trim($dataCPremat_Curso[0]['cur_Nombre']).' ('.trim($dataCPremat_Curso[0]['course_shortname']).')'),      // Nombre del curso
+                    25 => html_utf8($dataCPremat_Curso[0]['fecha_ini']),          // mat_fechaini
+                    26 => html_utf8($dataCPremat_Curso[0]['fecha_fin']),          // mat_fechafin
+                    27 => html_utf8($dataCPremat_Curso[0]['cur_Modalidad']),         // mat_modalidad
+                    28 => html_utf8($dataCPremat_Curso[0]['cur_HoraLect']),       // mat_horalectiva                
+                    29 => html_utf8($x_ConCertificado),          // ConCertificado
+                    30 => html_utf8($x_CodigoCertificado),        // Nro Certificado
                     31 => $NotasAlumno
                 ];
-
-            }
-
             
+            }
         }
         // echo json_encode($response);
         if (count($response) == 0) {
@@ -172,11 +185,20 @@ switch ($_POST['op']) {
 
         $idCurso = $_POST['id_curso'];
         $dataCURS = $rm->getCursosWithUsuariosInscritos($idCurso);
-        $dataPREMATRICULAALUMNOCERT = $cpremat->Listar_DataCertificados_By_Idcurso($idCurso); 
-
+        
         $listaAlumCursos = [];
+        $item = 0;
         foreach ($dataCURS as $curso) {
-            $dataFU = $rm->getUsuarioDataField($curso['user_id']);            
+
+            $dataFU = $rm->getUsuarioDataField($curso['user_id']);
+
+            $mdl_UserId = $curso['user_id'];
+            $mdl_DNI    = $curso['user_DNI'];
+            $mdl_Course_shortname = $curso['short_name'];
+            
+            $dataCPremat_CursoMatricula = $cpremat->Ver_Datos_Detallado_Curso_Matricula_By_Curso_Alumno($mdl_Course_shortname, $mdl_DNI);
+            $dataCPremat_Curso = $cpremat->get_CursosByShortname($mdl_Course_shortname); 
+
             $nivelGobierno = '';
             // foreach ($dataFU as $infoFU) {
             //     if ($infoFU['shortname'] == 'Mat_NivelGobierno') {
@@ -186,14 +208,56 @@ switch ($_POST['op']) {
             if (count($dataFU) > 0) {
                 getDatosFU($dataFU);
             }
-            $listaAlumCursos[] = [
-                'course_id' => $curso['course_id'],
-                'course_name' => html_utf8($curso['course_name'].' ('.$curso['short_name'].')'),
-                'course_ini' => html_utf8($curso['course_ini']),
-                'course_fin' => html_utf8($curso['course_fin']),
-                'user_entidad' => html_utf8($curso['user_entidad']),
-                'user_nivelGob' => html_utf8($nivelGobierno)                
-            ];
+
+
+            $v_Cur_Nombre = ($dataCPremat_Curso) ? $dataCPremat_Curso[0]['cur_Nombre'] : '';
+            $v_Cur_Shortname = ($dataCPremat_Curso) ? $dataCPremat_Curso[0]['course_shortname'] : '';
+            $v_Cur_Fecha_ini = ($dataCPremat_Curso) ? $dataCPremat_Curso[0]['fecha_ini'] : '';
+            $v_Cur_Fecha_fin = ($dataCPremat_Curso) ? $dataCPremat_Curso[0]['fecha_fin'] : '';
+            $v_Cur_NumEvent = ($dataCPremat_Curso) ? $dataCPremat_Curso[0]['cur_NumEvent'] : '';
+            $v_Cur_CodPOI = ($dataCPremat_Curso) ? $dataCPremat_Curso[0]['cur_CodPOI'] : '';
+
+            $v_Mat_Entidad = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Entidad'] : '';            
+            $v_Mat_Depa = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Depa'] : '';
+            $v_Mat_Prov = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Prov'] : '';
+            $v_Mat_Dist = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Dist'] : '';
+            $v_Mat_NivelGobierno = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_NivelGobierno'] : '';
+            $v_Mat_Materno = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Materno'] : '';
+            $v_Mat_Paterno = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Paterno'] : '';
+            $v_Mat_Nombre = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Nombre'] : '';
+            $v_Mat_Grado = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Grado'] : '';
+            $v_Mat_Profesion = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Profesion'] : '';
+            $v_Mat_Cargo = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Cargo'] : '';
+            $v_Mat_ModoContrato = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_ModoContrato'] : '';
+            $v_Mat_Area = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Area'] : '';
+
+            
+            if($v_Mat_Materno !=''){
+                
+                $item++;
+
+                $listaAlumCursos[] = [
+                    'item'=> $item,
+                    'course_NumEvent' => html_utf8($v_Cur_NumEvent),
+                    'user_Depa' => html_utf8($v_Mat_Depa),
+                    'user_Prov' => html_utf8($v_Mat_Prov),
+                    'user_Dist' => html_utf8($v_Mat_Dist),
+                    'course_ini' => html_utf8($v_Cur_Fecha_ini),
+                    'course_fin' => html_utf8($v_Cur_Fecha_fin),                
+                    'course_id' => $curso['course_id'],
+                    'course_name' => html_utf8($v_Cur_Nombre.' ('.$v_Cur_Shortname.')'),
+                    'user_entidad' => html_utf8($v_Mat_Entidad),
+                    'user_nivelGob' => html_utf8($v_Mat_NivelGobierno),
+                    'user_Nombres' => html_utf8(trim($v_Mat_Paterno).' '.trim($v_Mat_Materno).' '.trim($v_Mat_Nombre)),
+                    'user_Grado' => html_utf8($v_Mat_Grado),
+                    'user_Profesion' => html_utf8($v_Mat_Profesion),
+                    'user_Cargo' => html_utf8($v_Mat_Cargo),
+                    'user_Contrato' => html_utf8($v_Mat_ModoContrato),
+                    'user_Area' => html_utf8($v_Mat_Area),
+                    'course_POI' => html_utf8($v_Cur_CodPOI)                
+                ];
+
+            }
         }
         $instituciones = array_values(array_unique(array_column($listaAlumCursos, 'user_entidad')));
         $DataExcel = [];
@@ -241,7 +305,7 @@ switch ($_POST['op']) {
 
         
         $DataExcel['dataEntidades'] = $response;
-        $DataExcel['dataCertificacion'] = $dataPREMATRICULAALUMNOCERT;
+        $DataExcel['dataAlumnosInscritos'] = $listaAlumCursos;
         
 
         if (empty($response)) {
@@ -260,16 +324,24 @@ switch ($_POST['op']) {
         $idCurso = $_POST['id_curso'];
         $dataCURS = $rm->getCursosWithUsuariosInscritos($idCurso);
         $dataActividad = $rm->getActividades_By_CourseID($idCurso);   
-        $dataCurso = $rm->getCourse_By_ID($idCurso);   
 
         $acu = 0;
         $listaAlumCursos = [];
         foreach ($dataCURS as $curso) {
-            $acu++;
+          
+
+            $mdl_UserId = $curso['user_id'];
+            $mdl_DNI = $curso['user_DNI'];
+            $mdl_Course_shortname = $curso['short_name'];
+
             $dataUSER = $rm->getUsuario($curso['user_id']);
             $dataCert = $rm->getCodigoGenerateCertificate($curso['user_id'], $idCurso);
             $dataFU = $rm->getUsuarioDataField($curso['user_id']);
-            $dataPREMATRICULAALUMNO = $cpremat->Listar_DataCertificados_By_Idcurso_IdUserMoodle($_POST['id_curso'], $curso['user_id']); 
+
+            $dataCPremat_CursoMatricula = $cpremat->Ver_Datos_Detallado_Curso_Matricula_By_Curso_Alumno($mdl_Course_shortname, $mdl_DNI);
+            $dataCPremat_Certificado = $cpremat->Listar_DataCertificados_By_Idcurso_IdUserMoodle($_POST['id_curso'], $mdl_UserId); 
+            $dataCPremat_Curso = $cpremat->get_CursosByShortname($mdl_Course_shortname);
+
             $apellidoMater = '';
             $nivelGobierno = '';
             $rubro = '';
@@ -290,71 +362,93 @@ switch ($_POST['op']) {
                 getDatosFU($dataFU);
             }
 
+            $v_Cur_Nombre = ($dataCPremat_Curso) ? $dataCPremat_Curso[0]['cur_Nombre'] : '';
+            $v_Cur_Shortname = ($dataCPremat_Curso) ? $dataCPremat_Curso[0]['course_shortname'] : '';
+            $v_Cur_Fecha_ini = ($dataCPremat_Curso) ? $dataCPremat_Curso[0]['fecha_ini'] : '';
+            $v_Cur_Fecha_fin = ($dataCPremat_Curso) ? $dataCPremat_Curso[0]['fecha_fin'] : '';
+            $v_Cur_NumEvent = ($dataCPremat_Curso) ? $dataCPremat_Curso[0]['cur_NumEvent'] : '';
+            $v_Cur_CodPOI = ($dataCPremat_Curso) ? $dataCPremat_Curso[0]['cur_CodPOI'] : '';
+            $v_Cur_Modalidad = ($dataCPremat_Curso) ? $dataCPremat_Curso[0]['cur_Modalidad'] : '';
+            $v_Cur_HoraLect = ($dataCPremat_Curso) ? $dataCPremat_Curso[0]['cur_HoraLect'] : '';
 
-            $xNombreCurso_Moodle = $dataCurso[0]['fullname'].' ('.$dataCurso[0]['shortname'].')';
 
-            $x_Mat_Entidad = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['mdl_entidad'] : '';
-            $x_mdl_depa_lab = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['mdl_depa_lab'] : '';
-            $x_mdl_prov_lab = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['mdl_prov_lab'] : '';
-            $x_mdl_dist_lab = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['mdl_dist_lab'] : '';
-            $x_Mat_Cargo = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['mdl_cargo'] : '';
-            $x_Mat_Area = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['mdl_area_lab'] : '';
-            $x_Mat_Profesion = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['mdl_profesion'] : '';
-            $x_Mat_NivelGobierno = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['mdl_nivelgrado'] : '';
-            $x_Mat_Rubro = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['mdl_rubro'] : '';
-            $x_Mat_ModoContrato = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['mdl_tipocontrato'] : '';            
+            $v_Mat_Materno = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Materno'] : '';
+            $v_Mat_Paterno = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Paterno'] : '';
+            $v_Mat_Nombre = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Nombre'] : '';
+            $v_Mat_DNI = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_DNI'] : '';
+            $v_Mat_Entidad = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Entidad'] : '';
+            $v_Mat_Cargo = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Cargo'] : '';
+            $v_Mat_Area = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Area'] : '';
+            $v_Mat_Profesion = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Profesion'] : '';
+            $v_Mat_NivelGobierno = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_NivelGobierno'] : '';
+            $v_Mat_Clasificacion = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Clasificacion'] : ''; //RUBRO
+            $v_Mat_ModoContrato = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_ModoContrato'] : '';
+            $v_Mat_Correo = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Correo'] : '';
+            $v_Mat_Celular = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Celular'] : '';
+            $v_Mat_Oficio = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Oficio'] : '';
+            $v_Mat_Genero = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Genero'] : '';
+            $v_Mat_Grado = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Grado'] : '';
+			$v_Mat_Depa = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Depa'] : '';
+            $v_Mat_Prov = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Prov'] : '';
+            $v_Mat_Dist = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Dist'] : '';
 
-            $x_mdl_cur_fullname = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['mdl_cur_fullname'] : '';
-            $x_mdl_cur_shortname = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['mdl_cur_shortname'] : '';
-            $x_mat_fechaini = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['mat_fechaini'] : '';
-            $x_mat_fechafin = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['mat_fechafin'] : '';
-            $x_mat_modalidad = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['mat_modalidad'] : '';
-            $x_mat_horalectiva = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['mat_horalectiva'] : '';
-            $x_mat_codpoi = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['mat_codpoi'] : '';
-            $x_ConCertificado = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['ConCertificado'] : '';
-            $x_NroCertificado = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['NroCertificado'] : '';
-            $ConCertificado = ($x_ConCertificado== '1') ? 'SI' : 'NO';
+            if(count($dataCPremat_Certificado)>0){
+                $sConCertificado = ($dataCPremat_Certificado) ? $dataCPremat_Certificado[0]['ConCertificado'] : '';
+                $x_ConCertificado = ($sConCertificado== '1') ? 'SI' : 'NO';
+                $x_CodigoCertificado = ($dataCPremat_Certificado) ? $dataCPremat_Certificado[0]['NroCertificado'] : '';                
+            }else{
+                $x_ConCertificado = '';
+                $x_CodigoCertificado = '';
+            }   
 
-            $NotasAlumno = $rm->getNotasCourse_By_CourseID_UserId($curso['user_id'], $idCurso);
+            if($v_Mat_Materno != ''){
+                
+                $acu++;
 
-            $listaAlumCursos[] = [
-                0 => $acu,                                              // N°
-                1 => html_utf8($dataUSER[0]['username']),               // Codigo
-                2 => html_utf8($dataUSER[0]['lastname']),               // Apellido Paterno
-                3 => html_utf8($apellidoMater),                         // Apellido Materno'
-                4 => html_utf8($dataUSER[0]['firstname']),              // Nombres
-                5 => html_utf8($dataUSER[0]['username']),               // DNI
-                6 => html_utf8($x_Mat_Entidad), //html_utf8($dataUSER[0]['institution']),            // Entidad
-                7 => date("d/m/Y", $dataUSER[0]['timecreated']),        // Fecha registro
-                8 => html_utf8($x_Mat_NivelGobierno),                         // Nivel gobierno
-                9 => html_utf8($x_Mat_Rubro),                                 // Rubro
-                10 => html_utf8($x_mdl_depa_lab),            // Departamento_Laboral
-                11 => html_utf8($x_mdl_prov_lab),                        // Provincia_Laboral
-                12 => html_utf8($x_mdl_dist_lab),                        // Distrito_Laboral
-                13 => html_utf8($gener),                                // Género
-                14 => html_utf8($profe),                                // Profesión
-                15 => html_utf8($ruc),                                  // RUC
-                16 => html_utf8($dataUSER[0]['department']),            // Área
-                17 => html_utf8($x_Mat_Cargo),                                // Cargo
-                18 => html_utf8($modalidad),                            // Modalidad
-                19 => html_utf8($x_mat_modalidad),                        // Descrip. Modalidad
-                20 => html_utf8($dataUSER[0]['email']),                 // Correo Electrónico
-                21 => html_utf8($dataUSER[0]['phone2']),                // Teléfono Fijo
-                22 => html_utf8($numOficioDesc),                        // Nro de oficio de inscripción
-                23 => html_utf8($adjuntoArchiv),                        // Adjuntó Archivo?
-                //24 => !empty($dataCert) ? $dataCert[0]['code'] : '-',    // Codigo de certificado autogenerado
-                24 => !empty($dataCurso) ? $dataCurso[0]['shortname'] : '-',    // NOMBRE CORTO DEL CURSO
+                $NotasAlumno = $rm->getNotasCourse_By_CourseID_UserId($curso['user_id'], $idCurso);
 
-                25 => html_utf8($xNombreCurso_Moodle),   // Nombre del curso
-                26 => html_utf8($x_mat_fechaini),        // mat_fechaini
-                27 => html_utf8($x_mat_fechafin),        // mat_fechafin
-                28 => html_utf8($x_mat_modalidad),       // mat_modalidad
-                29 => html_utf8($x_mat_horalectiva),     // mat_horalectiva
-                30 => html_utf8($x_mat_codpoi),          // mat_codpoi
-                31 => html_utf8($ConCertificado),        // ConCertificado
-                32 => html_utf8($x_NroCertificado),      // NroCertificado
-                33 => $NotasAlumno  // NOTAS
-            ];
+                $listaAlumCursos[] = [
+                    0 => $acu,                                              // N°
+                    1 => html_utf8($dataUSER[0]['username']),               // Codigo
+                    2 => html_utf8($v_Mat_Paterno),               // Apellido Paterno
+                    3 => html_utf8($v_Mat_Materno),                         // Apellido Materno'
+                    4 => html_utf8($v_Mat_Nombre),              // Nombres
+                    5 => html_utf8($v_Mat_DNI),               // DNI
+                    6 => html_utf8($v_Mat_Entidad), //html_utf8($dataUSER[0]['institution']),            // Entidad
+                    7 => date("d/m/Y", $dataUSER[0]['timecreated']),        // Fecha registro
+                    8 => html_utf8($v_Mat_NivelGobierno),                         // Nivel gobierno
+                    9 => html_utf8($v_Mat_Clasificacion),                                 // Rubro
+                    10 => html_utf8($v_Mat_Depa),            // Departamento_Laboral
+                    11 => html_utf8($v_Mat_Prov),                        // Provincia_Laboral
+                    12 => html_utf8($v_Mat_Dist),                        // Distrito_Laboral
+                    13 => html_utf8($v_Mat_Genero),                                // Género
+                    14 => html_utf8($v_Mat_Profesion),                                // Profesión
+                    15 => html_utf8($ruc),                                  // RUC
+                    16 => html_utf8($v_Mat_Area),            // Área
+                    17 => html_utf8($v_Mat_Cargo),                                // Cargo
+                    18 => html_utf8($v_Mat_ModoContrato),                            // Modalidad Contrato
+                    19 => html_utf8($v_Mat_ModoContrato),                        // Descrip. Modalidad
+                    20 => html_utf8($v_Mat_Correo),                 // Correo Electrónico
+                    21 => html_utf8($v_Mat_Celular),                // Teléfono Fijo
+                    22 => html_utf8($v_Mat_Oficio),                        // Nro de oficio de inscripción
+                    23 => html_utf8($adjuntoArchiv),                        // Adjuntó Archivo?
+                    //24 => !empty($dataCert) ? $dataCert[0]['code'] : '-',    // Codigo de certificado autogenerado
+                    24 => html_utf8($v_Cur_Shortname),
+
+                    25 => html_utf8($v_Cur_Nombre),   // Nombre del curso
+                    26 => html_utf8($v_Cur_Fecha_ini),        // mat_fechaini
+                    27 => html_utf8($v_Cur_Fecha_fin),        // mat_fechafin
+                    28 => html_utf8($v_Cur_Modalidad),       // mat_modalidad
+                    29 => html_utf8($v_Cur_HoraLect),     // mat_horalectiva
+                    30 => html_utf8($v_Cur_CodPOI),          // mat_codpoi
+                    31 => html_utf8($x_ConCertificado),        // ConCertificado
+                    32 => html_utf8($x_CodigoCertificado),      // NroCertificado
+                    33 => $NotasAlumno  // NOTAS
+                ];
+
+            }
+
+            
         }
 
         $response = [
@@ -374,78 +468,105 @@ switch ($_POST['op']) {
         session_start();
         $rm = new reporte_moodle_Model;
         $cpremat = new matricula_Model;
+
         $idCurso = $_POST['id_curso'];
         $dataUCN = $rm->getUsuariosWithNota($idCurso);
         $dataPC = $rm->getForosPruebasByCursos($idCurso); //$rm->getPruebasByCursos($idCurso)
         $dataCurso = $rm->getCourse_By_ID($idCurso);   
+
+        $mdl_Course_shortname = $dataCurso[0]['shortname'];
+        $dataCPremat_Curso = $cpremat->get_CursosByShortname($mdl_Course_shortname); 
+
+        $v_Cur_Nombre = ($dataCPremat_Curso) ? $dataCPremat_Curso[0]['cur_Nombre'] : '';
+        $v_Cur_Shortname = ($dataCPremat_Curso) ? $dataCPremat_Curso[0]['course_shortname'] : '';
+        $v_Cur_Fecha_ini = ($dataCPremat_Curso) ? $dataCPremat_Curso[0]['fecha_ini'] : '';
+        $v_Cur_Fecha_fin = ($dataCPremat_Curso) ? $dataCPremat_Curso[0]['fecha_fin'] : '';
+        $v_Cur_NumEvent = ($dataCPremat_Curso) ? $dataCPremat_Curso[0]['cur_NumEvent'] : '';
+        $v_Cur_CodPOI = ($dataCPremat_Curso) ? $dataCPremat_Curso[0]['cur_CodPOI'] : '';
+        $v_Cur_Modalidad = ($dataCPremat_Curso) ? $dataCPremat_Curso[0]['cur_Modalidad'] : '';
+        $v_Cur_HoraLect = ($dataCPremat_Curso) ? $dataCPremat_Curso[0]['cur_HoraLect'] : '';
+
         $listaAlumNotas = [];
         $acu = 0;
-        foreach ($dataUCN as $alumno) {
-            $acu++;
+        foreach ($dataUCN as $alumno) {            
+
             $idUser = $alumno['user_id'];
+            $mdl_DNI = $alumno['user_DNI'];
+
             $dataUSER = $rm->getUsuario($idUser);
             $dataFU = $rm->getUsuarioDataField($idUser);
+            $dataCPremat_CursoMatricula = $cpremat->Ver_Datos_Detallado_Curso_Matricula_By_Curso_Alumno($mdl_Course_shortname, $mdl_DNI);
+            $dataCPremat_Certificado = $cpremat->Listar_DataCertificados_By_Idcurso_IdUserMoodle($_POST['id_curso'], $idUser); 
+
             $apellidoMater = '';
             foreach ($dataFU as $infoFU) {
                 if ($infoFU['shortname'] == 'Mat_Materno') {
                     $apellidoMater = $infoFU['data'];
                 }
             }
-            $nota = '';
-            $estd = '';
-            $notaCurso = [];
-            foreach ($dataPC as $prueba) {
-                $idPrueba = $prueba['prueba_id'];
-                $dataNPR = $rm->getNotasByPruebas($idUser, $idPrueba);
-                if (isset($dataNPR[0]['prueba_nota'])) {
-                    $nota = $dataNPR[0]['prueba_nota'];
-                    $estd = $nota >= 12 ? 'APROBADO' : 'DESAPROBADO';
-                } else {
-                    $nota = '-';
-                    $estd = 'SIN NOTA';
-                }
-                $notaCurso[] = [
-                    'fech' => $prueba['prueba_fecha'],
-                    'nota' => $nota == '-' ? $nota : number_format(round($nota, 2), 2),
-                    'estd' => $estd,
+
+            $v_Mat_Materno = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Materno'] : '';
+            $v_Mat_Paterno = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Paterno'] : '';
+            $v_Mat_Nombre = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Nombre'] : '';
+            $v_Mat_DNI = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_DNI'] : '';
+            $v_Mat_Entidad = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Entidad'] : '';
+
+            if(count($dataCPremat_Certificado)>0){
+                $sConCertificado = ($dataCPremat_Certificado) ? $dataCPremat_Certificado[0]['ConCertificado'] : '';
+                $x_ConCertificado = ($sConCertificado== '1') ? 'SI' : 'NO';
+                $x_CodigoCertificado = ($dataCPremat_Certificado) ? $dataCPremat_Certificado[0]['NroCertificado'] : '';                
+            }else{
+                $x_ConCertificado = '';
+                $x_CodigoCertificado = '';
+            } 
+
+            if($v_Mat_Paterno !=''){
+
+                $acu++;
+
+                $nota = '';
+                $estd = '';
+                $notaCurso = [];
+                foreach ($dataPC as $prueba) {
+                    $idPrueba = $prueba['prueba_id'];
+                    $dataNPR = $rm->getNotasByPruebas($idUser, $idPrueba);
+                    if (isset($dataNPR[0]['prueba_nota'])) {
+                        $nota = $dataNPR[0]['prueba_nota'];
+                        $estd = $nota >= 12 ? 'APROBADO' : 'DESAPROBADO';
+                    } else {
+                        $nota = '-';
+                        $estd = 'SIN NOTA';
+                    }
+                    $notaCurso[] = [
+                        'fech' => $prueba['prueba_fecha'],
+                        'nota' => $nota == '-' ? $nota : number_format(round($nota, 2), 2),
+                        'estd' => $estd,
+                    ];
+                } 
+
+                $NotaPromFinal = $rm->getNotaPromFinal($idUser, $idCurso);
+
+                $listaAlumNotas[] = [
+                    0 => $acu,                                              // N°
+                    1 => html_utf8($v_Mat_Paterno),               // Apellido Paterno
+                    2 => html_utf8($v_Mat_Materno),                         // Apellido Materno
+                    3 => html_utf8($v_Mat_Nombre),              // Nombres
+                    4 => html_utf8($v_Mat_DNI),               // DNI
+                    5 => html_utf8($v_Mat_Entidad),            // Entidad
+                    6 => $notaCurso,
+                    7 => $NotaPromFinal,
+                    8 => html_utf8(trim($v_Cur_Nombre).' ('.trim($v_Cur_Shortname).')'),
+                    9 => $v_Cur_Fecha_ini,
+                    10 => $v_Cur_Fecha_fin,
+                    11 => $v_Cur_Modalidad,
+                    12 => $v_Cur_HoraLect,
+                    13 => $v_Cur_CodPOI,
+                    14 => $x_ConCertificado,
+                    15 => $x_CodigoCertificado
                 ];
+
             }
 
-            $xNombreCurso_Moodle = $dataCurso[0]['fullname'].' ('.$dataCurso[0]['shortname'].')';
-
-            $NotaPromFinal = $rm->getNotaPromFinal($idUser, $idCurso);
-
-            $dataPREMATRICULAALUMNO = $cpremat->Listar_DataCertificados_By_Idcurso_IdUserMoodle($idCurso, $idUser); 
-
-            $x_mdl_cur_fullname = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['mdl_cur_fullname'] : '';
-            $x_mdl_cur_shortname = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['mdl_cur_shortname'] : '';
-            $x_mat_fechaini = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['mat_fechaini'] : '';
-            $x_mat_fechafin = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['mat_fechafin'] : '';
-            $x_mat_modalidad = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['mat_modalidad'] : '';
-            $x_mat_horalectiva = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['mat_horalectiva'] : '';
-            $x_mat_codpoi = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['mat_codpoi'] : '';
-            $x_ConCertificado = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['ConCertificado'] : '';
-            $x_NroCertificado = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['NroCertificado'] : '';
-			$ConCertificado = ($x_ConCertificado== '1') ? 'SI' : 'NO';
-
-            $listaAlumNotas[] = [
-                0 => $acu,                                              // N°
-                1 => html_utf8($dataUSER[0]['lastname']),               // Apellido Paterno
-                2 => html_utf8($apellidoMater),                         // Apellido Materno
-                3 => html_utf8($dataUSER[0]['firstname']),              // Nombres
-                4 => html_utf8($dataUSER[0]['username']),               // DNI
-                5 => html_utf8($dataUSER[0]['institution']),            // Entidad
-                6 => $notaCurso,
-                7 => $NotaPromFinal,
-                8 => $xNombreCurso_Moodle,
-                9 => $x_mat_fechaini,
-                10 => $x_mat_fechafin,
-                11 => $x_mat_modalidad,
-                12 => $x_mat_horalectiva,
-                13 => $x_mat_codpoi,
-                14 => $ConCertificado,
-                15 => $x_NroCertificado
-            ];
         }
         // echo json_encode($listaAlumNotas);
         // die();
@@ -473,14 +594,25 @@ switch ($_POST['op']) {
         $dataCI = $rm->getCursosWithInscritos_ByIdCurso($xCodCursoMoodle);
         $dataPC = $rm->getForosPruebasByCursos($xCodCursoMoodle);
         $response = [];
-        foreach ($dataCI as $course) {
-            $dataCURS = $rm->getCursosWithUsuariosInscritos($course['course_id']);
+        foreach ($dataCI as $course) {            
+
+            $dataCURS = $rm->getCursosWithUsuariosInscritos($course['course_id']);                      
+
             $acu = 0;
             $listaAlumCursos = [];
             foreach ($dataCURS as $curso) {
-                $acu++;
+                
                 $dataUSER = $rm->getUsuario($curso['user_id']);
                 $dataFU = $rm->getUsuarioDataField($curso['user_id']);
+
+                $mdl_UserId = $curso['user_id'];
+                $mdl_DNI    = $curso['user_DNI'];
+                $mdl_Course_shortname = $curso['short_name'];  
+
+                $dataCPremat_CursoMatricula = $cpremat->Ver_Datos_Detallado_Curso_Matricula_By_Curso_Alumno($mdl_Course_shortname, $mdl_DNI);
+                $dataCPremat_Certificado = $cpremat->Listar_DataCertificados_By_Idcurso_IdUserMoodle($course['course_id'], $mdl_UserId); 
+                $dataCPremat_Curso = $cpremat->get_CursosByShortname($mdl_Course_shortname); 
+                
                 $apellidoMater = '';
                 $nivelGobierno = '';
                 $rubro = '';
@@ -521,59 +653,93 @@ switch ($_POST['op']) {
                     ];
                 }
 
+                
                 $NotaPromFinal = $rm->getNotaPromFinal($curso['user_id'], $xCodCursoMoodle);
 
-                $dataPREMATRICULAALUMNO = $cpremat->Listar_DataCertificados_By_Idcurso_IdUserMoodle($xCodCursoMoodle, $curso['user_id']); 
+                $v_Cur_Nombre = ($dataCPremat_Curso) ? $dataCPremat_Curso[0]['cur_Nombre'] : '';
+                $v_Cur_Shortname = ($dataCPremat_Curso) ? $dataCPremat_Curso[0]['course_shortname'] : '';
+                $v_Cur_Fecha_ini = ($dataCPremat_Curso) ? $dataCPremat_Curso[0]['fecha_ini'] : '';
+                $v_Cur_Fecha_fin = ($dataCPremat_Curso) ? $dataCPremat_Curso[0]['fecha_fin'] : '';
+                $v_Cur_NumEvent = ($dataCPremat_Curso) ? $dataCPremat_Curso[0]['cur_NumEvent'] : '';
+                $v_Cur_CodPOI = ($dataCPremat_Curso) ? $dataCPremat_Curso[0]['cur_CodPOI'] : '';
+                $v_Cur_Modalidad = ($dataCPremat_Curso) ? $dataCPremat_Curso[0]['cur_Modalidad'] : '';
+                $v_Cur_HoraLect = ($dataCPremat_Curso) ? $dataCPremat_Curso[0]['cur_HoraLect'] : '';
 
-                $x_mdl_cur_fullname = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['mdl_cur_fullname'] : '';
-                $x_mdl_cur_shortname = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['mdl_cur_shortname'] : '';
-                $x_mat_fechaini = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['mat_fechaini'] : '';
-                $x_mat_fechafin = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['mat_fechafin'] : '';
-                $x_mat_modalidad = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['mat_modalidad'] : '';
-                $x_mat_horalectiva = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['mat_horalectiva'] : '';
-                $x_mat_codpoi = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['mat_codpoi'] : '';
-                $x_ConCertificado = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['ConCertificado'] : '';
-                $x_NroCertificado = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['NroCertificado'] : '';
-                $ConCertificado = ($x_ConCertificado== '1') ? 'SI' : 'NO';
-                
-                $listaAlumCursos[] = [
-                    0 => html_utf8($course['course_cod']),
-                    1 => html_utf8($course['course_name']),
-                    2 => html_utf8($course['course_ini']),
-                    3 => html_utf8($course['course_fin']),
-                    4 => html_utf8($acu),                                  // N°
-                    5 => html_utf8($dataUSER[0]['username']),              // Codigo
-                    6 => html_utf8($dataUSER[0]['lastname']),              // Apellido Paterno
-                    7 => html_utf8($apellidoMater),                        // Apellido Materno'
-                    8 => html_utf8($dataUSER[0]['firstname']),             // Nombres
-                    9 => html_utf8($dataUSER[0]['username']),              // DNI
-                    10 => html_utf8($dataUSER[0]['institution']),          // Entidad
-                    11 => date("d/m/Y", $dataUSER[0]['timecreated']),      // Fecha registro
-                    12 => html_utf8($nivelGobierno),                       // Nivel gobierno
-                    13 => html_utf8($rubro),                               // Rubro
-                    14 => html_utf8($dataUSER[0]['department']),           // Departamento_Laboral
-                    15 => html_utf8($provinLaboral),                       // Provincia_Laboral
-                    16 => html_utf8($distriLaboral),                       // Distrito_Laboral
-                    17 => html_utf8($gener),                               // Género
-                    18 => html_utf8($profe),                               // Profesión
-                    19 => html_utf8($ruc),                                 // RUC
-                    20 => html_utf8($dataUSER[0]['department']),           // Área
-                    21 => html_utf8($cargo),                               // Cargo
-                    22 => html_utf8($modalidad),                           // Modalidad
-                    23 => html_utf8($descModalidad),                       // Descrip. Modalidad
-                    24 => html_utf8($dataUSER[0]['email']),                // Correo Electrónico
-                    25 => html_utf8($dataUSER[0]['phone2']),               // Teléfono Fijo
-                    26 => html_utf8($numOficioDesc),                       // Nro de oficio de inscripción
-                    27 => html_utf8($adjuntoArchiv),                       // Adjuntó Archivo?
+                $v_Mat_Materno = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Materno'] : '';
+                $v_Mat_Paterno = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Paterno'] : '';
+                $v_Mat_Nombre = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Nombre'] : '';
+                $v_Mat_DNI = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_DNI'] : '';
+                $v_Mat_Entidad = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Entidad'] : '';
+                $v_Mat_Cargo = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Cargo'] : '';
+                $v_Mat_Area = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Area'] : '';
+                $v_Mat_Profesion = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Profesion'] : '';
+                $v_Mat_NivelGobierno = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_NivelGobierno'] : '';
+                $v_Mat_Clasificacion = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Clasificacion'] : '';
+                $v_Mat_ModoContrato = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_ModoContrato'] : '';
+                $v_Mat_Correo = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Correo'] : '';
+                $v_Mat_Celular = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Celular'] : '';
+                $v_Mat_Oficio = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Oficio'] : '';
+                $v_Mat_Genero = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Genero'] : '';
+                $v_Mat_Grado = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Grado'] : '';
+                $v_Mat_Depa = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Depa'] : '';
+                $v_Mat_Prov = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Prov'] : '';
+                $v_Mat_Dist = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Dist'] : '';
 
-                    28 => html_utf8($x_mat_horalectiva),                  
-                    29 => html_utf8($x_mat_codpoi),                       
-                    30 => html_utf8($ConCertificado),                     
-                    31 => html_utf8($x_NroCertificado),      
+                if(count($dataCPremat_Certificado)>0){
+                    $sConCertificado = ($dataCPremat_Certificado) ? $dataCPremat_Certificado[0]['ConCertificado'] : '';
+                    $x_ConCertificado = ($sConCertificado== '1') ? 'SI' : 'NO';
+                    $x_CodigoCertificado = ($dataCPremat_Certificado) ? $dataCPremat_Certificado[0]['NroCertificado'] : '';                
+                }else{
+                    $x_ConCertificado = '';
+                    $x_CodigoCertificado = '';
+                }  
+
+                if($v_Mat_Paterno !=''){
+
+                    $acu++;
                     
-                    32 => $notaCurso,
-                    33 => $NotaPromFinal,
-                ];
+                    $listaAlumCursos[] = [
+                        0 => html_utf8($v_Cur_Shortname),
+                        1 => html_utf8($v_Cur_Nombre),
+                        2 => html_utf8($v_Cur_Fecha_ini),
+                        3 => html_utf8($v_Cur_Fecha_fin),
+                        4 => html_utf8($acu),                                  // N°
+                        5 => html_utf8($dataUSER[0]['username']),              // Codigo
+                        6 => html_utf8($v_Mat_Paterno),              // Apellido Paterno
+                        7 => html_utf8($v_Mat_Materno),                        // Apellido Materno'
+                        8 => html_utf8($v_Mat_Nombre),             // Nombres
+                        9 => html_utf8($v_Mat_DNI),              // DNI
+                        10 => html_utf8($v_Mat_Entidad),          // Entidad
+                        11 => date("d/m/Y", $dataUSER[0]['timecreated']),      // Fecha registro
+                        12 => html_utf8($v_Mat_NivelGobierno),                       // Nivel gobierno
+                        13 => html_utf8($v_Mat_Clasificacion),                               // Rubro
+                        14 => html_utf8($v_Mat_Depa),           // Departamento_Laboral
+                        15 => html_utf8($v_Mat_Prov),                       // Provincia_Laboral
+                        16 => html_utf8($v_Mat_Dist),                       // Distrito_Laboral
+                        17 => html_utf8($v_Mat_Genero),                               // Género
+                        18 => html_utf8($v_Mat_Profesion),                               // Profesión
+                        19 => html_utf8($ruc),                                 // RUC
+                        20 => html_utf8($v_Mat_Area),           // Área
+                        21 => html_utf8($v_Mat_Cargo),                               // Cargo
+                        22 => html_utf8($v_Mat_ModoContrato),                           // Modalidad
+                        23 => html_utf8($descModalidad),                       // Descrip. Modalidad
+                        24 => html_utf8($v_Mat_Correo),                // Correo Electrónico
+                        25 => html_utf8($v_Mat_Celular),               // Teléfono Fijo
+                        26 => html_utf8($numOficioDesc),                       // Nro de oficio de inscripción
+                        27 => html_utf8($adjuntoArchiv),                       // Adjuntó Archivo?
+
+                        28 => html_utf8($v_Cur_HoraLect),                  
+                        29 => html_utf8($v_Cur_CodPOI),                       
+                        30 => html_utf8($x_ConCertificado),                     
+                        31 => html_utf8($x_CodigoCertificado),      
+                        
+                        32 => $notaCurso,
+                        33 => $NotaPromFinal,
+                    ];
+
+                }
+
+                
             }
             
             $response[] = $listaAlumCursos;            
@@ -604,15 +770,22 @@ switch ($_POST['op']) {
             $cpremat = new matricula_Model;
     
             $idCurso = $_POST['id_curso'];
-            $dataCURS = $rm->getCursosWithUsuariosInscritos($idCurso); 
-            $dataCurso = $rm->getCourse_By_ID($idCurso);   
+            $dataCURS = $rm->getCursosWithUsuariosInscritos($idCurso);  
     
             $acu = 0;
             $listaAlumCursos = [];
             foreach ($dataCURS as $curso) {
                 $acu++;
                 $dataUSER = $rm->getUsuario($curso['user_id']);
-                $dataPREMATRICULAALUMNO = $cpremat->Listar_DataCertificados_By_Idcurso_IdUserMoodle($_POST['id_curso'], $curso['user_id']); 
+
+                $mdl_UserId = $curso['user_id'];
+                $mdl_DNI    = $curso['user_DNI'];
+                $mdl_Course_shortname = $curso['short_name'];
+                
+                $dataCPremat_CursoMatricula = $cpremat->Ver_Datos_Detallado_Curso_Matricula_By_Curso_Alumno($mdl_Course_shortname, $mdl_DNI);
+                $dataCPremat_Certificado = $cpremat->Listar_DataCertificados_By_Idcurso_IdUserMoodle($_POST['id_curso'], $mdl_UserId); 
+                $dataCPremat_Curso = $cpremat->get_CursosByShortname($mdl_Course_shortname); 
+
                 $apellidoMater = '';
                 $nivelGobierno = '';
                 $rubro = '';
@@ -630,53 +803,64 @@ switch ($_POST['op']) {
                 $discapacidad = '';
                 $descDiscapac = '';
     
-                $xNombreCurso_Moodle = $dataCurso[0]['fullname'].' ('.$dataCurso[0]['shortname'].')';
-    
-                $x_Mat_Entidad = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['mdl_entidad'] : '';
-                $x_mdl_depa_lab = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['mdl_depa_lab'] : '';
-                $x_mdl_prov_lab = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['mdl_prov_lab'] : '';
-                $x_mdl_dist_lab = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['mdl_dist_lab'] : '';
-                $x_Mat_Cargo = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['mdl_cargo'] : '';
-                $x_Mat_Area = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['mdl_area_lab'] : '';
-                $x_Mat_Profesion = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['mdl_profesion'] : '';
-                $x_Mat_NivelGobierno = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['mdl_nivelgrado'] : '';
-                $x_Mat_Rubro = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['mdl_rubro'] : '';
-                $x_Mat_ModoContrato = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['mdl_tipocontrato'] : '';            
-    
-                $x_mdl_dni = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['mdl_dni'] : '';
-                $x_mdl_apepat = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['mdl_apepat'] : '';
-                $x_mdl_apemat = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['mdl_apemat'] : '';
-                $x_mdl_nombres = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['mdl_nombres'] : '';
+                $v_Cur_Nombre = ($dataCPremat_Curso) ? $dataCPremat_Curso[0]['cur_Nombre'] : '';
+                $v_Cur_Shortname = ($dataCPremat_Curso) ? $dataCPremat_Curso[0]['course_shortname'] : '';
+                $v_Cur_Fecha_ini = ($dataCPremat_Curso) ? $dataCPremat_Curso[0]['fecha_ini'] : '';
+                $v_Cur_Fecha_fin = ($dataCPremat_Curso) ? $dataCPremat_Curso[0]['fecha_fin'] : '';
+                $v_Cur_NumEvent = ($dataCPremat_Curso) ? $dataCPremat_Curso[0]['cur_NumEvent'] : '';
+                $v_Cur_CodPOI = ($dataCPremat_Curso) ? $dataCPremat_Curso[0]['cur_CodPOI'] : '';
+                $v_Cur_Modalidad = ($dataCPremat_Curso) ? $dataCPremat_Curso[0]['cur_Modalidad'] : '';
+                $v_Cur_HoraLect = ($dataCPremat_Curso) ? $dataCPremat_Curso[0]['cur_HoraLect'] : '';
 
-                $x_mdl_cur_fullname = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['mdl_cur_fullname'] : '';
-                $x_mdl_cur_shortname = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['mdl_cur_shortname'] : '';
-                $x_mat_fechaini = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['mat_fechaini'] : '';
-                $x_mat_fechafin = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['mat_fechafin'] : '';
-                $x_mat_modalidad = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['mat_modalidad'] : '';
-                $x_mat_horalectiva = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['mat_horalectiva'] : '';
-                $x_mat_codpoi = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['mat_codpoi'] : '';
-                $x_ConCertificado = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['ConCertificado'] : '';
-                $x_NroCertificado = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['NroCertificado'] : '';
-                $x_mdl_nivelgrado = ($dataPREMATRICULAALUMNO) ? $dataPREMATRICULAALUMNO[0]['mdl_nivelgrado'] : '';
-                $ConCertificado = ($x_ConCertificado== '1') ? 'SI' : 'NO';
+                $v_Mat_Materno = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Materno'] : '';
+                $v_Mat_Paterno = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Paterno'] : '';
+                $v_Mat_Nombre = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Nombre'] : '';
+                $v_Mat_DNI = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_DNI'] : '';
+                $v_Mat_Entidad = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Entidad'] : '';
+                $v_Mat_Cargo = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Cargo'] : '';
+                $v_Mat_Area = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Area'] : '';
+                $v_Mat_Profesion = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Profesion'] : '';
+                $v_Mat_NivelGobierno = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_NivelGobierno'] : '';
+                $v_Mat_Clasificacion = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Clasificacion'] : '';
+                $v_Mat_ModoContrato = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_ModoContrato'] : '';
+                $v_Mat_Correo = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Correo'] : '';
+                $v_Mat_Celular = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Celular'] : '';
+                $v_Mat_Oficio = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Oficio'] : '';
+                $v_Mat_Genero = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Genero'] : '';
+                $v_Mat_Grado = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Grado'] : '';
+                $v_Mat_Depa = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Depa'] : '';
+                $v_Mat_Prov = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Prov'] : '';
+                $v_Mat_Dist = ($dataCPremat_CursoMatricula) ? $dataCPremat_CursoMatricula[0]['Mat_Dist'] : '';
+
+                if(count($dataCPremat_Certificado)>0){
+                    $sConCertificado = ($dataCPremat_Certificado) ? $dataCPremat_Certificado[0]['ConCertificado'] : '';
+                    $x_ConCertificado = ($sConCertificado== '1') ? 'SI' : 'NO';
+                    $x_CodigoCertificado = ($dataCPremat_Certificado) ? $dataCPremat_Certificado[0]['NroCertificado'] : '';                
+                }else{
+                    $x_ConCertificado = '';
+                    $x_CodigoCertificado = '';
+                }  
     
-                $listaAlumCursos[] = [
-                    0 => html_utf8($x_mat_modalidad),       // mat_modalidad
-                    1 => html_utf8($xNombreCurso_Moodle),   // Nombre del curso
-                    2 => html_utf8($x_mat_fechaini),        // mat_fechaini
-                    3 => html_utf8($x_mat_fechafin),        // mat_fechafin
-                    4 => html_utf8($x_mat_horalectiva),     // mat_horalectiva
-                    5 => html_utf8($x_mdl_dni),               // DNI
-                    6 => html_utf8($x_mdl_nombres),              // Nombres
-                    7 => html_utf8($x_mdl_apepat),               // Apellido Paterno
-                    8 => html_utf8($x_mdl_apemat),                         // Apellido Materno'
-                    9 => html_utf8($x_Mat_Profesion),                         // profesion
-                    10 => html_utf8($x_Mat_Entidad), //html_utf8($dataUSER[0]['institution']),            // Entidad                    
-                    11 => html_utf8($x_mdl_depa_lab),            // Departamento_Laboral
-                    12 => html_utf8($x_mdl_prov_lab),                        // Provincia_Laboral
-                    13 => html_utf8($x_mdl_dist_lab),                        // Distrito_Laboral
-                    14 => html_utf8($x_mdl_nivelgrado)                        // Distrito_Laboral
-                ];
+                if($v_Mat_Paterno !=''){
+                    $listaAlumCursos[] = [
+                        0 => html_utf8($v_Cur_Modalidad),       // mat_modalidad
+                        1 => html_utf8($v_Cur_Nombre.' ('. $v_Cur_Shortname.')'),   // Nombre del curso
+                        2 => html_utf8($v_Cur_Fecha_ini),        // mat_fechaini
+                        3 => html_utf8($v_Cur_Fecha_fin),        // mat_fechafin
+                        4 => html_utf8($v_Cur_HoraLect),     // mat_horalectiva
+                        5 => html_utf8($v_Mat_DNI),               // DNI
+                        6 => html_utf8($v_Mat_Nombre),              // Nombres
+                        7 => html_utf8($v_Mat_Paterno),               // Apellido Paterno
+                        8 => html_utf8($v_Mat_Materno),                         // Apellido Materno'
+                        9 => html_utf8($v_Mat_Profesion),                         // profesion
+                        10 => html_utf8($v_Mat_Entidad), //html_utf8($dataUSER[0]['institution']),            // Entidad                    
+                        11 => html_utf8($v_Mat_Depa),            // Departamento_Laboral
+                        12 => html_utf8($v_Mat_Prov),                        // Provincia_Laboral
+                        13 => html_utf8($v_Mat_Dist),                        // Distrito_Laboral
+                        14 => html_utf8($v_Mat_Grado)                        // Distrito_Laboral
+                    ];
+                }
+                
             }
     
             $response = [

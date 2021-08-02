@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+    <script src="../Vista/JS/Paginas/Cursos.js"></script>
+
+
+
+</head>
+
+<body class="modal-content">
+    <div id="errorphp"></div>
+
+
+    <div class="content-page-container full-reset center-box clearfix">
+        <div>
+            <form id="frmCursos" name="frmCursos" enctype="multipart/form-data">
+                <input type="hidden" name="ID_USUARIO" id="ID_USUARIO">
+                <input type="hidden" name="ID_CURSO" id="ID_CURSO">
+                <input type="hidden" name="ACCION_CUR" id="ACCION_CUR" value="0">
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Nombre:</label>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control" name="TXT_NOMBRE" id="TXT_NOMBRE" maxlength="100">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Nombre corto:</label>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control" name="TXT_SHORT_NOMBRE" id="TXT_SHORT_NOMBRE" maxlength="100">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Fecha / Hora de inicio:</label>
+                    </div>
+                    <div class="col-md-2">
+                        <input type="text" class="form-control " name="TXT_FECHA_INICIO" id="TXT_FECHA_INICIO">
+                    </div>
+                    <div class="col-md-2">
+                        <input type="time" class="form-control" name="TXT_HORA_INICIO" id="TXT_HORA_INICIO">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Fecha / Hora de fin:</label>
+                    </div>
+                    <div class="col-md-2">
+                        <input type="text" class="form-control" name="TXT_FECHA_FIN" id="TXT_FECHA_FIN">
+                    </div>
+                    <div class="col-md-2">
+                        <input type="time" class="form-control" name="TXT_HORA_FIN" id="TXT_HORA_FIN">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Categoria:</label>
+                    </div>
+                    <div class="col-md-4">
+                        <select class="form-control" name="TXT_CURSO_CATEGORIA" id="TXT_CURSO_CATEGORIA">
+                            <option>Seleccione</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Lugar:</label>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control" name="TXT_LUGAR" id="TXT_LUGAR" maxlength="100">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Publico dirigido:</label>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control" name="TXT_PUBLICO_DIRIGINDO" id="TXT_PUBLICO_DIRIGINDO" maxlength="100">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Hora Lectiva:</label>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control" name="TXT_HORALECTIVA" id="TXT_HORALECTIVA" maxlength="10">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Modalidad:</label>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control" name="TXT_MODALIDAD" id="TXT_MODALIDAD" maxlength="100">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Nro. Evento:</label>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control" name="TXT_NUMEVENTO" id="TXT_NUMEVENTO" maxlength="90">
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Código POI:</label>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control" name="TXT_CODPOI" id="TXT_CODPOI" maxlength="90">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Mostrar Banner:</label>
+                    </div>
+                    <div class="col-md-4">
+                        <select class="form-control" id="CBO_PUBLICAR" name="CBO_PUBLICAR">
+                            <option value="SI" selected="selected">SI</option>
+                            <option value="NO">NO</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Estado:</label>
+                    </div>
+                    <div class="col-md-4">
+                        <select class="form-control" id="CBO_ESTADO" name="CBO_ESTADO">
+                            <option value="1">Activo</option>
+                            <option value="0">Inactivo</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Descripción:</label>
+                    </div>
+                    <div class="col-md-4">
+                        <!-- <textarea class="form-control" id="TXA_DESCRIPCION" name="TXA_DESCRIPCION" style="height: 170px;"></textarea> -->
+                        <!-- <textarea id="ckeditor" class="ckeditor" name="ckeditor"></textarea> -->
+                    </div>
+                </div>
+
+                <div class="row mb-2">
+                    <div class="col-md-8">
+                        <textarea class="ckeditor" id="TXA_DESCRIPCION" name="TXA_DESCRIPCION"></textarea>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+
+                        <label class="btn btn-primary" for="txf_adjuntar_imagen">
+                            <input type="file" id="txf_adjuntar_imagen" name="txf_adjuntar_imagen"
+                                style="display:none;" />
+                            Adjuntar imagen
+                        </label>
+                        <input name="TXT_VAL_IMAGEN" type="hidden" class="texto_arial_azul_n_12" id="TXT_VAL_IMAGEN" value="">
+                        <label id="txf_adjuntar_imagen_lbl" name="txf_adjuntar_imagen_lbl">
+
+                        </label>
+                        <div id="div_label_archiv_oficio"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4">
+                        <input type="button" name="btn_ConfitmarReg" id="btn_ConfitmarReg" value="      Registrar      " style="background-color:#900; height:50px; border-radius:20px; color:#FFFFFF" onclick="fnGrabarCursos()">
+                        <input type="button" name="btn_Limpiar" id="btn_Limpiar" value="      Limpiar      " style="background-color:#900; height:50px; border-radius:20px; color:#FFFFFF" onclick="fnlimpiacurso()">
+                    </div>
+                </div>
+
+            </form>
+        </div>
+
+
+        <div id="divTablaCursos" name="divTablaCursos" class="modal-body table-responsive">
+            <table class="table table-striped" id="tblCursos" name="tblCursos">
+                <thead>
+                    <th class="table-primary">FILA</th>
+                    <th class="table-primary">ACCION</th>
+                    <th class="ocultar">ID</th>
+                    <th class="table-primary">NOMBRE</th>
+                    <th class="table-primary">NOMBRE CORTO</th>
+                    <th class="table-primary">FECHA INICIO</th>
+                    <th class="table-primary">FECHA FIN</th>
+                    <th class="table-primary">HORA INICIO</th>
+                    <th class="table-primary">HORA FIN</th>
+                    <th class="table-primary">LUGAR</th>
+                    <th class="table-primary">PUBLICO DIRIGIDO</th>
+                    <th class="table-primary">HORA LECTIVA</th>
+                    <th class="table-primary">MODALIDAD</th>
+                    <th class="table-primary">NRO EVENTO</th>
+                    <th class="table-primary">CODIGO POI</th>
+                    <th class="ocultar">ESTADO</th>
+                    <th class="ocultar">NOMBRE IMAGEN</th>
+                    <th class="ocultar">RUTA IMAGEN</th>
+                    <th class="ocultar">CATEGORIA</th>
+                    <th class="ocultar">DESCRIPCIÓN</th>
+                    <th class="table-primary">PUBLICADO</th>
+                </thead>
+                <tbody id="tbCursos" name="tbCursos">
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+    <div class="modal fade bd-example-modal-lg" id="DivMdlListmatriculados" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="H5titulocurso" name="H5titulocurso">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <select name="CBO_PROCESO_CUR" id="CBO_PROCESO_CUR" class="form-control centrarcombo">
+                            <option value="1">Inscritos (Procesados)</option>
+                            <option value="0" selected="selected">No procesados</option>
+                        </select>
+                    </div>
+                    <div id="divTablamatriculacurso" name="divTablamatriculacurso" class="table-responsive">
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

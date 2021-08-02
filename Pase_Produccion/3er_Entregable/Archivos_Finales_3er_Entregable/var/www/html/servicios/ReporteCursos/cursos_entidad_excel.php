@@ -95,9 +95,9 @@ $objPHPExcel->getActiveSheet()->getStyle('A2:Q2')->applyFromArray($estiloTituloC
 
 $objPHPExcel->getActiveSheet()->setCellValue('A2', 'N°');
 $objPHPExcel->getActiveSheet()->setCellValue('B2', 'NRO EVENTO');
-$objPHPExcel->getActiveSheet()->setCellValue('C2', 'DEPARTAMENTO LABORAL');
-$objPHPExcel->getActiveSheet()->setCellValue('D2', 'PROVINCIA LABORAL');
-$objPHPExcel->getActiveSheet()->setCellValue('E2', 'DISTRITO LABORAL');
+$objPHPExcel->getActiveSheet()->setCellValue('C2', 'DEPARTAMENTO');
+$objPHPExcel->getActiveSheet()->setCellValue('D2', 'PROVINCIA');
+$objPHPExcel->getActiveSheet()->setCellValue('E2', 'DISTRITO');
 $objPHPExcel->getActiveSheet()->setCellValue('F2', 'FECHA INICIO');
 $objPHPExcel->getActiveSheet()->setCellValue('G2', 'FECHA FIN');
 $objPHPExcel->getActiveSheet()->setCellValue('H2', 'DOMINACIÓN DEL CURSO');
@@ -122,26 +122,26 @@ $objPHPExcel->getActiveSheet()->mergeCells("A1:Q1");
 $objPHPExcel->getActiveSheet()->getStyle('A1:Q1')->applyFromArray($styleTitulo);
 
 $acu = 0;
-foreach ($entInscritas['dataCertificacion'] as $data) {
+foreach ($entInscritas['dataAlumnosInscritos'] as $data) {
     $inicio = $fila;
     $acu++;
-    $objPHPExcel->getActiveSheet()->setCellValue('A' . $fila, strtoupper($acu));
-    $objPHPExcel->getActiveSheet()->setCellValue('B' . $fila, strtoupper($data['mat_nroevento']));
-    $objPHPExcel->getActiveSheet()->setCellValue('C' . $fila, strtoupper($data['mdl_depa_lab']));
-    $objPHPExcel->getActiveSheet()->setCellValue('D' . $fila, strtoupper($data['mdl_prov_lab']));
-    $objPHPExcel->getActiveSheet()->setCellValue('E' . $fila, strtoupper($data['mdl_dist_lab']));
-    $objPHPExcel->getActiveSheet()->setCellValue('F' . $fila, strtoupper($data['mat_fechaini'])); 
-    $objPHPExcel->getActiveSheet()->setCellValue('G' . $fila, strtoupper($data['mat_fechafin']));
-    $objPHPExcel->getActiveSheet()->setCellValue('H' . $fila, strtoupper($data['mdl_cur_fullname'].' ('.$data['mdl_cur_shortname'].')')); 
-    $objPHPExcel->getActiveSheet()->setCellValue('I' . $fila, strtoupper($data['mdl_entidad'])); 
-    $objPHPExcel->getActiveSheet()->setCellValue('J' . $fila, strtoupper($data['mdl_nivelgrado'])); 
-    $objPHPExcel->getActiveSheet()->setCellValue('K' . $fila, strtoupper(trim($data['mdl_apepat']).' '.trim($data['mdl_apemat']).' '.trim($data['mdl_nombres'])));
-    $objPHPExcel->getActiveSheet()->setCellValue('L' . $fila, strtoupper($data['mdl_gradoacademico'])); 
-    $objPHPExcel->getActiveSheet()->setCellValue('M' . $fila, strtoupper($data['mdl_profesion'])); 
-    $objPHPExcel->getActiveSheet()->setCellValue('N' . $fila, strtoupper($data['mdl_cargo'])); 
-    $objPHPExcel->getActiveSheet()->setCellValue('O' . $fila, strtoupper($data['mdl_tipocontrato'])); 
-    $objPHPExcel->getActiveSheet()->setCellValue('P' . $fila, strtoupper($data['mdl_area_lab'])); 
-    $objPHPExcel->getActiveSheet()->setCellValue('Q' . $fila, strtoupper($data['mat_codpoi'])); 
+    $objPHPExcel->getActiveSheet()->setCellValue('A' . $fila, strtoupper($data['item']));
+    $objPHPExcel->getActiveSheet()->setCellValue('B' . $fila, strtoupper($data['course_NumEvent']));
+    $objPHPExcel->getActiveSheet()->setCellValue('C' . $fila, strtoupper($data['user_Depa']));
+    $objPHPExcel->getActiveSheet()->setCellValue('D' . $fila, strtoupper($data['user_Prov']));
+    $objPHPExcel->getActiveSheet()->setCellValue('E' . $fila, strtoupper($data['user_Dist']));
+    $objPHPExcel->getActiveSheet()->setCellValue('F' . $fila, strtoupper($data['course_ini'])); 
+    $objPHPExcel->getActiveSheet()->setCellValue('G' . $fila, strtoupper($data['course_fin']));
+    $objPHPExcel->getActiveSheet()->setCellValue('H' . $fila, strtoupper($data['course_name'])); 
+    $objPHPExcel->getActiveSheet()->setCellValue('I' . $fila, strtoupper($data['user_entidad'])); 
+    $objPHPExcel->getActiveSheet()->setCellValue('J' . $fila, strtoupper($data['user_nivelGob'])); 
+    $objPHPExcel->getActiveSheet()->setCellValue('K' . $fila, strtoupper($data['user_Nombres']));
+    $objPHPExcel->getActiveSheet()->setCellValue('L' . $fila, strtoupper($data['user_Grado'])); 
+    $objPHPExcel->getActiveSheet()->setCellValue('M' . $fila, strtoupper($data['user_Profesion'])); 
+    $objPHPExcel->getActiveSheet()->setCellValue('N' . $fila, strtoupper($data['user_Cargo'])); 
+    $objPHPExcel->getActiveSheet()->setCellValue('O' . $fila, strtoupper($data['user_Contrato'])); 
+    $objPHPExcel->getActiveSheet()->setCellValue('P' . $fila, strtoupper($data['user_Area'])); 
+    $objPHPExcel->getActiveSheet()->setCellValue('Q' . $fila, strtoupper($data['course_POI'])); 
 
 
     /*
@@ -194,19 +194,19 @@ foreach (range('A', 'Q') as $columnID) {
 
 $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth("10");
 $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth("15");
-$objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth("18");
-$objPHPExcel->getActiveSheet()->getColumnDimension('D')->setWidth("30");
-$objPHPExcel->getActiveSheet()->getColumnDimension('E')->setWidth("30");
+$objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth("25");
+$objPHPExcel->getActiveSheet()->getColumnDimension('D')->setWidth("25");
+$objPHPExcel->getActiveSheet()->getColumnDimension('E')->setWidth("25");
 $objPHPExcel->getActiveSheet()->getColumnDimension('F')->setWidth("15");
 $objPHPExcel->getActiveSheet()->getColumnDimension('G')->setWidth("15");
-$objPHPExcel->getActiveSheet()->getColumnDimension('H')->setWidth("180");
+$objPHPExcel->getActiveSheet()->getColumnDimension('H')->setWidth("90");
 $objPHPExcel->getActiveSheet()->getColumnDimension('I')->setWidth("150");
 $objPHPExcel->getActiveSheet()->getColumnDimension('J')->setWidth("20");
 $objPHPExcel->getActiveSheet()->getColumnDimension('K')->setWidth("80");
 $objPHPExcel->getActiveSheet()->getColumnDimension('L')->setWidth("20");
-$objPHPExcel->getActiveSheet()->getColumnDimension('M')->setWidth("100");
-$objPHPExcel->getActiveSheet()->getColumnDimension('N')->setWidth("120");
-$objPHPExcel->getActiveSheet()->getColumnDimension('O')->setWidth("50");
+$objPHPExcel->getActiveSheet()->getColumnDimension('M')->setWidth("90");
+$objPHPExcel->getActiveSheet()->getColumnDimension('N')->setWidth("90");
+$objPHPExcel->getActiveSheet()->getColumnDimension('O')->setWidth("30");
 $objPHPExcel->getActiveSheet()->getColumnDimension('P')->setWidth("80");
 $objPHPExcel->getActiveSheet()->getColumnDimension('Q')->setWidth("15");
 
