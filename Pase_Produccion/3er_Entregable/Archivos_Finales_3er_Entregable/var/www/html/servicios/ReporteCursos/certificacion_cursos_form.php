@@ -269,7 +269,6 @@ echo "</pre>";
                             <th style="text-align: center;">Ap. Materno</th>
                             <th style="text-align: center;">Nombres</th>
                             <th style="text-align: center;">DNI</th>
-                            <th style="text-align: left;">Entidad</th>
                             <th style="text-align: left;">Horas Lectivas</th>
                             
                             <?php                                
@@ -282,7 +281,8 @@ echo "</pre>";
                             ?>
 
                             <th style="text-align: center;">¿Tiene Certificado?</th>
-                            <th style="text-align: center;">C&oacute;digo Certificado</th>
+                            <th style="text-align: center;">C&oacute;digo Certificado</th>                            
+                            <th style="text-align: left;">Entidad</th>
                             
                         </tr>
                     </thead>
@@ -335,9 +335,6 @@ echo "</pre>";
                             <td style="text-align: center;">                              
                               <?=$reg['DNIAlumno'];?>
                             </td>
-                            <td style="text-align: left;">                              
-                              <?=$reg['EntidadAlumno'];?>
-                            </td>
                             <td style="text-align: center;">
                               <?=$mObjCursoPreMatricula->cur_HoraLect?>
                             </td>                            
@@ -369,6 +366,9 @@ echo "</pre>";
                             </td>
                             <td style="text-align: center;">
                               <input type="text" class="form-control2" id="txt_NroCertificado_<?=$w;?>" value="" disabled="disabled" style="background-color: #c0c8d0; font-weight: bold;" maxlength="15"></div> 
+                            </td>                            
+                            <td style="text-align: left;">                              
+                              <?=$reg['EntidadAlumno'];?>
                             </td>
                         </tr>   
                         

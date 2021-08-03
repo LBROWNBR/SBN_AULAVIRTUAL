@@ -49,14 +49,11 @@ $mObjActividades = (object) $dataListaActividades;
                 
                     <thead>
                         <tr>
-                            <th style="width: 5%">Item</th>
-                            <th style="width: 65%">Curso Nombre Largo</th>
-                            <th style="width: 65%">Curso Nombre Corto</th>
+                            <th style="width: 5%">Item</th>                            
                             <th style="width: 65%">Ap. Paterno</th>
                             <th style="width: 65%">Ap. Materno</th>
                             <th style="width: 65%">Ap. Nombres</th>
                             <th style="width: 10%">DNI</th>
-                            <th style="width: 10%">Entidad</th>
                             <th style="width: 10%">Hora Lectiva</th>
 
                             <?php                                
@@ -70,6 +67,8 @@ $mObjActividades = (object) $dataListaActividades;
 
                             <th style="width: 10%">¿Tiene <br>Certificado?</th>                            
                             <th style="width: 10%">Código<br> Certificado</th>
+                            <th style="width: 65%">Curso</th>                            
+                            <th style="width: 10%">Entidad</th>
                         </tr>
                     </thead>
 
@@ -89,14 +88,11 @@ $mObjActividades = (object) $dataListaActividades;
                                 
                     ?>
                         <tr <?=$filaColor?>>
-                            <td><?=$w;?></td>                          
-                            <td><?=$reg['mdl_cur_fullname'];?></td>
-                            <td><?=$reg['mdl_cur_shortname'];?></td>
+                            <td><?=$w;?></td>        
                             <td><?=$reg['mdl_apepat'];?></td>
                             <td><?=$reg['mdl_apemat'];?></td>
                             <td><?=$reg['mdl_nombres'];?></td>
                             <td><?=$reg['mdl_dni'];?></td>
-                            <td><?=$reg['mdl_entidad'];?></td>
                             <td><?=$reg['mat_horalectiva'];?></td>
 
                             <?php
@@ -120,7 +116,9 @@ $mObjActividades = (object) $dataListaActividades;
                             ?>
 
                             <td><?=$DescripCertificado;?></td>
-                            <td><?=$reg['NroCertificado'];?></td>                            
+                            <td><?=$reg['NroCertificado'];?></td>                                                   
+                            <td><?=$reg['mdl_cur_fullname'];?> (<?=$reg['mdl_cur_shortname'];?>)</td>                            
+                            <td><?=$reg['mdl_entidad'];?></td>
                         </tr>   
 
                     <?php 
