@@ -857,7 +857,7 @@ switch ($_POST['op']) {
                         11 => html_utf8($v_Mat_Depa),            // Departamento_Laboral
                         12 => html_utf8($v_Mat_Prov),                        // Provincia_Laboral
                         13 => html_utf8($v_Mat_Dist),                        // Distrito_Laboral
-                        14 => html_utf8($v_Mat_Grado)                        // Distrito_Laboral
+                        14 => html_utf8($v_Mat_NivelGobierno)                        // Distrito_Laboral
                     ];
                 }
                 
