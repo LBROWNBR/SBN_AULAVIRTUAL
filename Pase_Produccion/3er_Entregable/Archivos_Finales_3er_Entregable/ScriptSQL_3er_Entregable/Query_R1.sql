@@ -75,3 +75,13 @@ CREATE TABLE `tbl_certificados` (
   `id_estado` varchar(1) DEFAULT '1',
   PRIMARY KEY (`CertID`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+
+
+-- DROP PROCEDURE IF EXISTS sp_sel_Usuarioxemail;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_sel_Usuarioxemail`(IN `USER_email` VARCHAR(100))
+BEGIN
+	SELECT * FROM `tbl_usuario` WHERE Usu_Email = USER_email;
+    END ;;
+DELIMITER ;
