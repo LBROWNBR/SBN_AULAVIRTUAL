@@ -129,6 +129,11 @@ foreach ($datos['datos'] as $data) {
         $objPHPExcel->getActiveSheet()->setCellValue('M' . $fila, strtoupper($data[12]));
         $objPHPExcel->getActiveSheet()->setCellValue('N' . $fila, strtoupper($data[13]));
         $objPHPExcel->getActiveSheet()->setCellValue('O' . $fila, strtoupper($data[14]));
+
+        $objPHPExcel->getActiveSheet()->getStyle('C'.$fila.':C'.$fila)->applyFromArray($styleCenter);
+        $objPHPExcel->getActiveSheet()->getStyle('D'.$fila.':D'.$fila)->applyFromArray($styleCenter);
+        $objPHPExcel->getActiveSheet()->getStyle('E'.$fila.':E'.$fila)->applyFromArray($styleCenter);
+        $objPHPExcel->getActiveSheet()->getStyle('F'.$fila.':F'.$fila)->applyFromArray($styleCenter);
     
         $fila++;
         
@@ -153,7 +158,6 @@ $objPHPExcel->getActiveSheet()->getColumnDimension('L')->setWidth("20");
 $objPHPExcel->getActiveSheet()->getColumnDimension('M')->setWidth("20");
 $objPHPExcel->getActiveSheet()->getColumnDimension('N')->setWidth("20");
 $objPHPExcel->getActiveSheet()->getColumnDimension('O')->setWidth("20");
-
 
 
 $objPHPExcel->getActiveSheet()->setCellValue('A1', 'CURSO "' . strtoupper($datos['curso']) . '"');
